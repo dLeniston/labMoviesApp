@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useState, useEffect}  from "react";
+import { getGenres } from "../../api/tmdb-api";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -25,11 +26,27 @@ const styles = {
 };
 
 export default function FilterMoviesCard(props) {
-  const genres = [
-    {id: 1, name: "Animation"},
-    {id: 2, name: "Comedy"},
-    {id: 3, name: "Thriller"}
-  ]
+  const [genres, setGenres] = useState([{ id: '0', name: "All" }])
+
+  useEffect(() => {
+    getGenres().then((allGenres) => {
+      setGenres([genres[0], ...allGenres]);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handleChange = (e, type, value) => {
+    e.preventDefault()
+    props.onUserInput(type, value)
+  };
+
+  const handleTextChange = e => {
+    handleChange(e, "title", e.target.value)
+  }
+
+  const handleGenreChange = e => {
+    handleChange(e, "genre", e.target.value)
+  };
 
   return (
     <>
@@ -44,14 +61,20 @@ export default function FilterMoviesCard(props) {
           id="filled-search"
           label="Search field"
           type="search"
+          value={props.titleFilter}
           variant="filled"
+          onChange={handleTextChange}
         />
+
         <FormControl sx={styles.formControl}>
           <InputLabel id="genre-label">Genre</InputLabel>
           <Select
             labelId="genre-label"
             id="genre-select"
+            value={props.genreFilter}
+            onChange={handleGenreChange}
           >
+
             {genres.map((genre) => {
               return (
                 <MenuItem key={genre.id} value={genre.id}>

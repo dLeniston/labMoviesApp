@@ -1,26 +1,34 @@
-import React from "react";
-import Header from "../components/headerMovieList";
-import Grid from "@mui/material/Grid";
-import MovieList from "../components/movieList";
+import React, { useState, useEffect } from "react";
+import PageTemplate from '../components/templateMovieListPage'
+import { getMovies } from "../api/tmdb-api";
 
-const styles = {
-  root: {
-    padding: "20px",
-  },
-};
+const HomePage = (props) => {
+  const [movies, setMovies] = useState([]);
+  const favourites = movies.filter(m => m.favourite)
+  localStorage.setItem('favourites', JSON.stringify(favourites))
 
-const MovieListPage = (props) => {
-  const movies = props.movies;
+  const addToFavourites = (movieId) => {
+    const updatedMovies = movies.map((m) =>
+      m.id === movieId ? { ...m, favourite: true } : m
+    );
+    setMovies(updatedMovies);
+  };
+
+  useEffect(() => {
+    getMovies().then(movies => {
+      setMovies(movies);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <Grid container sx={styles.root}>
-      <Grid item xs={12}>
-        <Header title={"Home Page"} />
-      </Grid>
-      <Grid item container spacing={5}>
-        <MovieList movies={movies}></MovieList>
-      </Grid>
-    </Grid>
+    <PageTemplate
+      title='Discover Movies'
+      movies={movies}
+      selectFavourite={addToFavourites}
+    />
   );
 };
-export default MovieListPage;
+export default HomePage;
+
+
