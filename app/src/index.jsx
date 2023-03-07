@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Navigate, Routes, Link } from "react-router-dom";
+import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
+import SiteHeader from './components/siteHeader'
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import MovieReviewPage from "./pages/movieReviewPage";
@@ -9,14 +10,7 @@ import FavouriteMoviesPage from "./pages/favouriteMoviesPage"; // NEW
 const App = () => {
   return (
     <BrowserRouter>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/movies/favourites">Favourites</Link>
-        </li>
-      </ul>
+        <SiteHeader />      {/* New Header  */}
       <Routes>
         <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
         <Route path="/movies/:id" element={<MoviePage />} />
