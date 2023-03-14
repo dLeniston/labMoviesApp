@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -11,9 +11,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
 import img from '../../images/film-poster-placeholder.png'
 import Avatar from "@mui/material/Avatar";
+import { MoviesContext } from "../../contexts/moviesContext";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -23,12 +23,16 @@ const styles = {
   },
 };
 
-export default function MovieCard(props) {
-  const movie = props.movie;
-  const handleAddToFavourite = (e) => {
-    e.preventDefault();
-    props.selectFavourite(movie.id);
-  };
+export default function MovieCard({ movie, action }) {
+
+  
+  const { favourites, addToFavourites } = useContext(MoviesContext);
+
+  if (favourites.find((id) => id === movie.id)) {
+    movie.favourite = true;
+  } else {
+    movie.favourite = false
+  }
 
   return (
     <Card sx={styles.card}>
@@ -72,13 +76,11 @@ export default function MovieCard(props) {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-      <IconButton aria-label="add to favourites" onClick={handleAddToFavourite}>
-        <FavoriteIcon color="primary" fontSize="large" />
-      </IconButton>
+        {action(movie)}
         <Link to={`/movies/${movie.id}`} state={{fav: movie.favourite}}>
-          <Button variant="outlined" size="medium" color="primary">
-            More Info ...
-          </Button>
+            <Button variant="outlined" size="medium" color="primary">
+              More Info ...
+            </Button>
         </Link>
       </CardActions>
     </Card>
