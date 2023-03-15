@@ -7,6 +7,7 @@ import Spinner from "../components/spinner";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, { titleFilter } from "../components/movieFilterUI";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
+import RemoveFromWatchlist from "../components/cardIcons/removeFromWatchlist";
 import WriteReview from "../components/cardIcons/writeReview";
 
 const titleFiltering = {
@@ -72,8 +73,7 @@ const WatchlistMoviesPage = () => {
         action={(movie) => {
             return (
               <>
-                <RemoveFromFavourites movie={movie} />
-                <WriteReview movie={movie} />
+                <RemoveFromWatchlist movie={movie} />
               </>
             );
           }}

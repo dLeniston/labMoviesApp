@@ -25,8 +25,10 @@ const MoviesContextProvider = (props) => {
       updatedWatchlist.push(movie.id);
     }
     setWatchlist(updatedWatchlist);
-    console.log("Adding movie to watchlist: ", movie.original_title)
-    console.log("Updated watchlist: ", updatedWatchlist)
+  }
+
+  const removeFromWatchlist = (movie) => {
+    setWatchlist(watchlist.filter((mId) => mId !== movie.id));
   }
 
   const addReview = (movie, review) => { 
@@ -41,6 +43,7 @@ const MoviesContextProvider = (props) => {
         addToFavourites,
         removeFromFavourites,
         addToWatchlist,
+        removeFromWatchlist,
         addReview,
       }}
     >
