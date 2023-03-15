@@ -6,8 +6,7 @@ import { getMovie } from "../api/tmdb-api";
 import Spinner from "../components/spinner";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, { titleFilter } from "../components/movieFilterUI";
-import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
-import WriteReview from "../components/cardIcons/writeReview";
+import RemoveFromWatchlist from "../components/cardIcons/removeFromWatchlist";
 
 const titleFiltering = {
   name: "title",
@@ -27,15 +26,15 @@ export const genreFiltering = {
   },
 };
 
-const FavouriteMoviesPage = () => {
-  const { favourites: movieIds } = useContext(MoviesContext);
+const WatchlistMoviesPage = () => {
+  const { watchlist: movieIds } = useContext(MoviesContext);
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [],
     [titleFiltering, genreFiltering]
   );
 
   // Create an array of queries and run them in parallel.
-  const favouriteMovieQueries = useQueries(
+  const watchlistMovieQueries = useQueries(
     movieIds.map((movieId) => {
       return {
         queryKey: ["movie", { id: movieId }],
@@ -44,15 +43,16 @@ const FavouriteMoviesPage = () => {
     })
   );
   // Check if any of the parallel queries is still loading.
-  const isLoading = favouriteMovieQueries.find((m) => m.isLoading === true);
+  const isLoading = watchlistMovieQueries.find((m) => m.isLoading === true);
 
   if (isLoading) {
     return <Spinner />;
   }
 
-  const allFavourites = favouriteMovieQueries.map((q) => q.data);
-  const displayMovies = allFavourites
-    ? filterFunction(allFavourites)
+  const fullWatchlist = watchlistMovieQueries.map((q) => q.data);
+  
+  const displayMovies = fullWatchlist
+    ? filterFunction(fullWatchlist)
     : [];
 
   const changeFilterValues = (type, value) => {
@@ -67,16 +67,15 @@ const FavouriteMoviesPage = () => {
   return (
     <>
       <PageTemplate
-        title="Favourite Movies"
+        title="Watchlist"
         movies={displayMovies}
         action={(movie) => {
-          return (
-            <>
-              <RemoveFromFavourites movie={movie} />
-              <WriteReview movie={movie} />
-            </>
-          );
-        }}
+            return (
+              <>
+                <RemoveFromWatchlist movie={movie} />
+              </>
+            );
+          }}
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
@@ -87,7 +86,4 @@ const FavouriteMoviesPage = () => {
   );
 };
 
-export default FavouriteMoviesPage;
-
-
-
+export default WatchlistMoviesPage;
