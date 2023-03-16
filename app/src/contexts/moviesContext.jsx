@@ -14,23 +14,33 @@ const MoviesContextProvider = (props) => {
         if(!favourites.includes(movie.id)) {
           // add to supabase DB table "favourites"
           let { error } = await supabaseClient
-            .from("favourites").insert({movie_id: movie.id})
+            .from("favourites").insert({movie_id: movie.id});
           // if no error returned from supabase, add to server state
           if(!error){
-            updatedFavourites.push(movie.id)
+            updatedFavourites.push(movie.id);
           }else{
-            throw error
+            throw error;
           }
         }
         setFavourites(updatedFavourites);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
-  const removeFromFavourites = (movie) => {
-    //remove from server state
-    setFavourites(favourites.filter((mId) => mId !== movie.id));
+  const removeFromFavourites = async (movie) => {
+    try{
+      let { error } = await supabaseClient
+      .from("favourites").delete().eq("movie_id", movie.id);
+      if(!error){
+        //remove from server state
+        setFavourites(favourites.filter((mId) => mId !== movie.id));
+      }else{
+        throw error;
+      }
+    }catch(err){
+      console.log(err);
+    }
   };
 
   const addToWatchlist = (movie) => {
