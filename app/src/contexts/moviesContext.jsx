@@ -31,30 +31,55 @@ const MoviesContextProvider = (props) => {
   const removeFromFavourites = async (movie) => {
     try{
       let { error } = await supabaseClient
-      .from("favourites").delete().eq("movie_id", movie.id);
+        .from("favourites").delete().eq("movie_id", movie.id);
+
       if(!error){
         //remove from server state
         setFavourites(favourites.filter((mId) => mId !== movie.id));
       }else{
         throw error;
       }
+    
     }catch(err){
       console.log(err);
     }
   };
 
-  const addToWatchlist = (movie) => {
-    let updatedWatchlist = [...watchlist];
-    if(!watchlist.includes(movie.id)) {
-      updatedWatchlist.push(movie.id);
+  const addToWatchlist = async (movie) => {
+    try{
+      let updatedWatchlist = [...watchlist];
+      if(!watchlist.includes(movie.id)) {
+        let { error } = await supabaseClient
+        .from("watchlist").insert({movie_id: movie.id});
+      
+        if(!error){
+          updatedWatchlist.push(movie.id)
+        }else{
+          throw error;
+        }
+      }
+      setWatchlist(updatedWatchlist);
+    }catch(err){
+      console.log(err);
     }
-    setWatchlist(updatedWatchlist);
   }
 
-  const removeFromWatchlist = (movie) => {
-    setWatchlist(watchlist.filter((mId) => mId !== movie.id));
-  }
+  const removeFromWatchlist = async (movie) => {
+    try{
+      let { error } = await supabaseClient
+        .from("watchlist").delete().eq("movie_id", movie.id);
+      
+      if(!error){
+        setWatchlist(watchlist.filter((mId) => mId !== movie.id));
+      }else{
+        throw error;
+      }
 
+    }catch(err){
+      console.log(err);
+    }
+  }
+  
   const addReview = (movie, review) => { 
     setMyReviews( {...myReviews, [movie.id]: review } )
   };
