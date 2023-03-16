@@ -19,7 +19,7 @@ import { MoviesContext } from "../../contexts/moviesContext";
 const styles = {
   card: { maxWidth: 345 },
   media: { height: 500 },
-  fav_avatar: {
+  avatar: {
     backgroundColor: "rgb(255, 0, 0)",
   },
   watch_avatar: {
@@ -49,14 +49,14 @@ export default function MovieCard({ movie, action }) {
       <CardHeader
         sx={styles.header}
         avatar={
-          movie.favorite ? (
-            <Avatar sx={styles.fav_avatar}>
+          movie.favourite ? (
+            <Avatar sx={styles.avatar}>
               <FavoriteIcon />
             </Avatar>
-          ) : movie.watchlist ? 
+          ) : movie.watchlist ? (
           <Avatar sx={styles.watch_avatar}>
             <ListIcon />
-          </Avatar> : null
+          </Avatar> ) : null
         }
         title={
           <Typography variant="h5" component="p">
