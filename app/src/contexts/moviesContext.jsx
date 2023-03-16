@@ -12,12 +12,15 @@ const MoviesContextProvider = (props) => {
     try{
         let updatedFavourites = [...favourites];
         if(!favourites.includes(movie.id)) {
-          //add to server state
-          updatedFavourites.push(movie.id)
           // add to supabase DB table "favourites"
           let { error } = await supabaseClient
             .from("favourites").insert({movie_id: movie.id})
-          if(error){throw error}
+          // if no error returned from supabase, add to server state
+          if(!error){
+            updatedFavourites.push(movie.id)
+          }else{
+            throw error
+          }
         }
         setFavourites(updatedFavourites);
     } catch (err) {
