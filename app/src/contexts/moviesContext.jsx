@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { supabaseClient } from "../utils/client";
 
 export const MoviesContext = React.createContext(null);
 
@@ -7,15 +8,25 @@ const MoviesContextProvider = (props) => {
   const [watchlist, setWatchlist] = useState([]);
   const [myReviews, setMyReviews] = useState( {} )
 
-  const addToFavourites = (movie) => {
-    let updatedFavourites = [...favourites];
-    if (!favourites.includes(movie.id)) {
-      updatedFavourites.push(movie.id);
+  const addToFavourites = async (movie) => {
+    try{
+        let updatedFavourites = [...favourites];
+        if(!favourites.includes(movie.id)) {
+          //add to server state
+          updatedFavourites.push(movie.id)
+          // add to supabase DB table "favourites"
+          let { error } = await supabaseClient
+            .from("favourites").insert({movie_id: movie.id})
+          if(error){throw error}
+        }
+        setFavourites(updatedFavourites);
+    } catch (err) {
+      console.log(err)
     }
-    setFavourites(updatedFavourites);
-  };
+  }
 
   const removeFromFavourites = (movie) => {
+    //remove from server state
     setFavourites(favourites.filter((mId) => mId !== movie.id));
   };
 
