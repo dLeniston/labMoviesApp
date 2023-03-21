@@ -14,7 +14,6 @@ const MoviesContextProvider = (props) => {
 
   const addToFavourites = async (movie) => {
     try{
-      console.log("FAVS: ", favourites);
         let updatedFavourites = [...favourites];
         if(!favourites.includes(movie.id)) {
           // add to supabase DB table "favourites"
