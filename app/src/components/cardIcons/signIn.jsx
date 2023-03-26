@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../../contexts/authContext";
 import Button from "@mui/material/Button";
 import GoogleIcon from '@mui/icons-material/Google';
@@ -12,7 +12,7 @@ const SignIn = () => {
   }
 
   return (
-    <Button variant="outlined" startIcon={<GoogleIcon />} onClick={handleLogin}>
+    <Button variant="contained" sx={{fontSize: 24}} startIcon={<GoogleIcon />} onClick={handleLogin}>
         Sign in with Google
     </Button>
   );

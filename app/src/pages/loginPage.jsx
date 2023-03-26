@@ -1,15 +1,10 @@
 import React from 'react';
-import SignIn from "../components/cardIcons/signIn";
+import Login from "../components/login";
 
 const LoginPage = () => {
 
     return (
-        <div className="row flex flex-center">
-          <div className="col-6 form-widget">
-            <h1 className="header">ScreenWatchers</h1>
-            <SignIn />
-          </div>
-        </div>
+        <Login />
       )
 }
 
