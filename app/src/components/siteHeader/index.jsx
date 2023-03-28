@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -11,6 +11,7 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useAuth } from "../../hooks/useAuth";
 
 const styles = {
   title: {
@@ -30,13 +31,21 @@ const SiteHeader = () => {
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
+  const { session }  = useAuth();
+  console.log("Session: ", session);
 
-  const menuOptions = [
+  const limitedOptions = [
+    { label: "Home", path: "/" },
+    { label: "Upcoming", path: "/movies/upcoming" },
+    { label: "Login", path: "/login"}
+  ];
+
+  const fullOptions = [ 
     { label: "Home", path: "/" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Favorites", path: "/movies/favourites" },
     { label: "Watchlist", path: "/movies/watchlist" },
-  ];
+  ]
 
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL);
@@ -56,6 +65,7 @@ const SiteHeader = () => {
           <Typography variant="h6" sx={styles.title}>
             All you ever wanted to know about Movies!
           </Typography>
+          {!session ? (<p>Not Logged In</p>) : (<p>Logged In</p>)}
           {isMobile ? (
             <>
               <IconButton
@@ -83,27 +93,46 @@ const SiteHeader = () => {
                 open={open}
                 onClose={() => setAnchorEl(null)}
               >
-                {menuOptions.map((opt) => (
+              {!session ? (
+                limitedOptions.map((opt) => (
                   <MenuItem
                     key={opt.label}
                     onClick={() => handleMenuSelect(opt.path)}
                   >
                     {opt.label}
                   </MenuItem>
-                ))}
+                ))
+                ):(
+                  fullOptions.map((opt) => (
+                    <MenuItem
+                      key={opt.label}
+                      onClick={() => handleMenuSelect(opt.path)}
+                    >
+                      {opt.label}
+                    </MenuItem>
+                )))}
               </Menu>
             </>
           ) : (
             <>
-              {menuOptions.map((opt) => (
-                <Button
-                  key={opt.label}
-                  color="inherit"
-                  onClick={() => handleMenuSelect(opt.path)}
-                >
-                  {opt.label}
-                </Button>
-              ))}
+              {!session ? (
+                limitedOptions.map((opt) => (
+                  <MenuItem
+                    key={opt.label}
+                    onClick={() => handleMenuSelect(opt.path)}
+                  >
+                    {opt.label}
+                  </MenuItem>
+                ))
+                ):(
+                  fullOptions.map((opt) => (
+                    <MenuItem
+                      key={opt.label}
+                      onClick={() => handleMenuSelect(opt.path)}
+                    >
+                      {opt.label}
+                    </MenuItem>
+                )))}
             </>
           )}
         </Toolbar>

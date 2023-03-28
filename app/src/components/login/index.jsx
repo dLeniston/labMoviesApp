@@ -2,6 +2,7 @@ import React from "react";
 import Container from "@mui/material/Container";
 import Logo from "../logo";
 import SignIn from "../cardIcons/signIn";
+import SignOut from "../cardIcons/signOut";
 
 const styles = {
     borderRadius: "25px",
@@ -25,6 +26,7 @@ export default function Login (props) {
         <Logo />
         <div style={div}><h1>The place to catch up on all your movies and shows!</h1></div>
         <div style={button}><SignIn /></div>
+        <div style={button}><SignOut /></div>
     </Container>
   );
 }
