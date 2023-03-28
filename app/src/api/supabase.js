@@ -9,7 +9,6 @@ export const getUserSelection = async (table) => {
         for(var key in data){
             idArray.push(data[key].id);
         }
-        console.log(idArray);
         return idArray; 
     }else{
         throw error;

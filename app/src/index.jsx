@@ -11,6 +11,7 @@ import MovieReviewPage from "./pages/movieReviewPage";
 import AddMovieReviewPage from './pages/addMovieReviewPage'
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage";
 import WatchlistMoviesPage from "./pages/watchlistMoviesPage";
+import SignOut from "./components/logout";
 import LoginPage from "./pages/loginPage";
 import MoviesContextProvider from "./contexts/moviesContext";
 import AuthContextProvider from "./contexts/authContext";
@@ -29,22 +30,23 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <SiteHeader />
+        <AuthContextProvider>
           <MoviesContextProvider>
-          <AuthContextProvider>
-            <Routes>
-              <Route path="/movies/upcoming" element={<UpcomingMovies />} />
-              <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
-              <Route path="/movies/watchlist" element={<WatchlistMoviesPage />} />
-              <Route path="/reviews/form" element={<AddMovieReviewPage/>} />
-              <Route path="/movies/:id" element={<MoviePage />} />
-              <Route path="/reviews/:id" element={<MovieReviewPage/>} />
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </AuthContextProvider>
+            <SiteHeader />
+              <Routes>
+                <Route path="/movies/upcoming" element={<UpcomingMovies />} />
+                <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
+                <Route path="/movies/watchlist" element={<WatchlistMoviesPage />} />
+                <Route path="/reviews/form" element={<AddMovieReviewPage/>} />
+                <Route path="/movies/:id" element={<MoviePage />} />
+                <Route path="/reviews/:id" element={<MovieReviewPage/>} />
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/logout" element={<SignOut />} />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
           </MoviesContextProvider>
+          </AuthContextProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
