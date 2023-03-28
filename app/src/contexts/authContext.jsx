@@ -6,16 +6,6 @@ export const AuthContext = React.createContext(null);
 const AuthContextProvider = (props) => {
     const [session, setSession ] = useState(null);
 
-    /* useEffect(() => {
-        supabaseClient.auth.getSession().then(({ data: { session } }) => {
-          setSession(session)
-        });
-
-        supabaseClient.auth.onAuthStateChange((_event, session) => {
-          setSession(session)
-        })
-      }, []);*/
-
       useEffect(() => {
         const session = supabaseClient.auth.getSession().then(({ data: { session } }) => {
           setSession(session)

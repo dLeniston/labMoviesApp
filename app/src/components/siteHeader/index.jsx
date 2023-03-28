@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
+import { Avatar } from '@mui/material';
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -45,6 +45,7 @@ const SiteHeader = () => {
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Favorites", path: "/movies/favourites" },
     { label: "Watchlist", path: "/movies/watchlist" },
+    { label: "Sign Out", path: "/logout"}
   ]
 
   const handleMenuSelect = (pageURL) => {
@@ -59,13 +60,16 @@ const SiteHeader = () => {
     <>
       <AppBar sx={styles.appbar} position="fixed" elevation={0} color="primary">
         <Toolbar>
-          <Typography variant="h4" sx={styles.title}>
-            TMDB Client
-          </Typography>
-          <Typography variant="h6" sx={styles.title}>
-            All you ever wanted to know about Movies!
-          </Typography>
-          {!session ? (<p>Not Logged In</p>) : (<p>Logged In</p>)}
+          {!session ? (
+            <div>
+              <Typography variant="h4" sx={styles.title}>ScreenWatchers</Typography>
+              <Typography variant="h6" sx={styles.title}>All you ever wanted to know about Movies!</Typography>
+            </div>
+            ):(
+            <div>
+              <Avatar alt={session?.user?.user_metadata?.full_name ?? null } src={session?.user?.user_metadata?.avatar_url ?? null} />
+            </div>) 
+            }
           {isMobile ? (
             <>
               <IconButton
@@ -74,8 +78,7 @@ const SiteHeader = () => {
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
-                size="large"
-              >
+                size="large">
                 <MenuIcon />
               </IconButton>
               <Menu
@@ -91,14 +94,12 @@ const SiteHeader = () => {
                   horizontal: "right",
                 }}
                 open={open}
-                onClose={() => setAnchorEl(null)}
-              >
+                onClose={() => setAnchorEl(null)}>
               {!session ? (
                 limitedOptions.map((opt) => (
                   <MenuItem
                     key={opt.label}
-                    onClick={() => handleMenuSelect(opt.path)}
-                  >
+                    onClick={() => handleMenuSelect(opt.path)}>
                     {opt.label}
                   </MenuItem>
                 ))
@@ -106,11 +107,10 @@ const SiteHeader = () => {
                   fullOptions.map((opt) => (
                     <MenuItem
                       key={opt.label}
-                      onClick={() => handleMenuSelect(opt.path)}
-                    >
+                      onClick={() => handleMenuSelect(opt.path)}>
                       {opt.label}
                     </MenuItem>
-                )))}
+                  )))}
               </Menu>
             </>
           ) : (
@@ -119,8 +119,7 @@ const SiteHeader = () => {
                 limitedOptions.map((opt) => (
                   <MenuItem
                     key={opt.label}
-                    onClick={() => handleMenuSelect(opt.path)}
-                  >
+                    onClick={() => handleMenuSelect(opt.path)}>
                     {opt.label}
                   </MenuItem>
                 ))
@@ -128,8 +127,7 @@ const SiteHeader = () => {
                   fullOptions.map((opt) => (
                     <MenuItem
                       key={opt.label}
-                      onClick={() => handleMenuSelect(opt.path)}
-                    >
+                      onClick={() => handleMenuSelect(opt.path)}>
                       {opt.label}
                     </MenuItem>
                 )))}
