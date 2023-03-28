@@ -68,7 +68,8 @@ const SiteHeader = () => {
             </div>
             ):(
             <div style={styles.title}>
-              <Avatar alt={session?.user?.user_metadata?.full_name ?? null } src={session?.user?.user_metadata?.avatar_url ?? null} />
+              <Avatar sx={{display: "inline-block", marginRight: "20px"}} alt={session?.user?.user_metadata?.full_name ?? null } src={session?.user?.user_metadata?.avatar_url ?? null} />
+              <Typography variant="h6" sx={{display: "inline-block"}}>{session?.user?.user_metadata?.full_name}</Typography>
             </div>) 
             }
           {isMobile ? (
