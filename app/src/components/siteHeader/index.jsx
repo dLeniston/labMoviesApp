@@ -3,6 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
+import screenWatchersLogo from '/assets/screenwatchers_logo_header.png';
 import { Avatar } from '@mui/material';
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -16,9 +17,10 @@ import { useAuth } from "../../hooks/useAuth";
 const styles = {
   title: {
     flexGrow: 1,
+    display: "inline-block"
   },
-  appbar: {
-    // background: 'none',
+  avatar: {
+    flexGrow: 1,
   },
   // offset: theme.mixins.toolbar,
 };
@@ -61,12 +63,11 @@ const SiteHeader = () => {
       <AppBar sx={styles.appbar} position="fixed" elevation={0} color="primary">
         <Toolbar>
           {!session ? (
-            <div>
-              <Typography variant="h4" sx={styles.title}>ScreenWatchers</Typography>
-              <Typography variant="h6" sx={styles.title}>All you ever wanted to know about Movies!</Typography>
+            <div style={styles.title}>
+              <img style={{display: "inline-block", width: "400px"}} src={screenWatchersLogo} />
             </div>
             ):(
-            <div>
+            <div style={styles.title}>
               <Avatar alt={session?.user?.user_metadata?.full_name ?? null } src={session?.user?.user_metadata?.avatar_url ?? null} />
             </div>) 
             }
