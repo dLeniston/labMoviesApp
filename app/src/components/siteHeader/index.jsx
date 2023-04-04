@@ -34,6 +34,7 @@ const SiteHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { session }  = useAuth();
+  console.log(session);
 
   const limitedOptions = [
     { label: "Home", path: "/" },
