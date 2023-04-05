@@ -4,11 +4,11 @@ import Button from "@mui/material/Button";
 import GoogleIcon from '@mui/icons-material/Google';
 
 const SignIn = () => {
-  const context = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
 
-  const handleLogin = async (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    await context.signIn();
+    authContext.signIn();
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useAuth } from "../../hooks/useAuth";
+import { MoviesContext } from "../../contexts/moviesContext";
 
 const styles = {
   title: {
@@ -34,7 +35,11 @@ const SiteHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { session }  = useAuth();
-  console.log(session);
+  const moviesContext = useContext(MoviesContext);
+
+  useEffect(() => {
+    moviesContext.getUserFavourites(session?.user?.id);
+  }, []);
 
   const limitedOptions = [
     { label: "Home", path: "/" },

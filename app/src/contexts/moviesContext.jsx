@@ -1,16 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getUserSelection } from "../api/supabase";
+import { useAuth } from "../hooks/useAuth";
 import { supabaseClient } from "../utils/client";
 
 export const MoviesContext = React.createContext(null);
 
-const userFavourites = await getUserSelection("favourites");
-const userWatchlist = await getUserSelection("watchlist");
-
 const MoviesContextProvider = (props) => {
-  const [favourites, setFavourites] = useState(userFavourites);
-  const [watchlist, setWatchlist] = useState(userWatchlist);
-  const [myReviews, setMyReviews] = useState( {} )
+  const { session }  = useAuth();
+  const [favourites, setFavourites] = useState( [] );
+  const [watchlist, setWatchlist] = useState( [] );
+  const [myReviews, setMyReviews] = useState( {} );
+
+  useEffect(() => {
+    getUserFavourites(session?.user?.id);
+    getUserWatchlist(session?.user?.id);
+  }, [session]);
+
+  const getUserFavourites = async (user) => {
+    let userFavourites = await getUserSelection("favourites", user);
+    if(userFavourites === undefined){
+      setFavourites([]);
+    }else{
+      setFavourites(userFavourites);
+    }
+  }
+
+  const getUserWatchlist = async (user) => {
+    let userWatchlist = await getUserSelection("watchlist", user);
+    if(userWatchlist === undefined){
+      setWatchlist([]);
+    }else{
+      setWatchlist(userWatchlist);
+    }
+  }
 
   const addToFavourites = async (movie, user) => {
     try{
@@ -93,6 +115,8 @@ const MoviesContextProvider = (props) => {
       value={{
         favourites,
         watchlist,
+        getUserFavourites,
+        getUserWatchlist,
         addToFavourites,
         removeFromFavourites,
         addToWatchlist,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
@@ -28,6 +28,7 @@ const HomePage = (props) => {
     [],
     [titleFiltering, genreFiltering]
   );
+  
   const { session }  = useAuth();
 
   if (isLoading) {
