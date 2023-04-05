@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useAuth } from "../../hooks/useAuth";
-import { MoviesContext } from "../../contexts/moviesContext";
 
 const styles = {
   title: {
@@ -35,11 +34,6 @@ const SiteHeader = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
   const { session }  = useAuth();
-  const moviesContext = useContext(MoviesContext);
-
-  useEffect(() => {
-    moviesContext.getUserFavourites(session?.user?.id);
-  }, []);
 
   const limitedOptions = [
     { label: "Home", path: "/" },
