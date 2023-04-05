@@ -16,3 +16,14 @@ export const getUserSelection = async (table, user) => {
         }
    }
 }
+
+// Function to return an item from a table
+// Can be used to return a specific item to process details, or check if a record exists
+export const returnItem = async (table, column, key, value) => {
+    let {data, error } = await supabaseClient.from(table).select(column).eq(key, value);
+    if(!error){
+        return data;
+    }else{
+        throw error;
+    }
+}

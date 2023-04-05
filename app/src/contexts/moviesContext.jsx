@@ -12,10 +12,12 @@ const MoviesContextProvider = (props) => {
   const [myReviews, setMyReviews] = useState( {} );
 
   useEffect(() => {
+    //Setup favourites and watchlist from user data present in database
     getUserFavourites(session?.user?.id);
     getUserWatchlist(session?.user?.id);
   }, [session]);
 
+  // Get users favourites from database, populate server state
   const getUserFavourites = async (user) => {
     let userFavourites = await getUserSelection("favourites", user);
     if(userFavourites === undefined){
@@ -25,6 +27,7 @@ const MoviesContextProvider = (props) => {
     }
   }
 
+  // Get users watchlist items from database, populate server state
   const getUserWatchlist = async (user) => {
     let userWatchlist = await getUserSelection("watchlist", user);
     if(userWatchlist === undefined){
@@ -39,8 +42,7 @@ const MoviesContextProvider = (props) => {
         let updatedFavourites = [...favourites];
         if(!favourites.includes(movie.id)) {
           // add to supabase DB table "favourites"
-          let { error } = await supabaseClient
-            .from("favourites").insert({id: movie.id, user_id: user});
+          let { error } = await supabaseClient.from("favourites").insert({id: movie.id, user_id: user});
           // if no error returned from supabase, add to server state
           if(!error){
             updatedFavourites.push(movie.id);
@@ -56,16 +58,13 @@ const MoviesContextProvider = (props) => {
 
   const removeFromFavourites = async (movie, user) => {
     try{
-      let { error } = await supabaseClient
-        .from("favourites").delete().eq("id", movie.id).eq("user_id", user);
-
+      let { error } = await supabaseClient.from("favourites").delete().eq("id", movie.id).eq("user_id", user);
       if(!error){
         //remove from server state
         setFavourites(favourites.filter((mId) => mId !== movie.id));
       }else{
         throw error;
       }
-    
     }catch(err){
       console.log(err);
     }
@@ -75,9 +74,7 @@ const MoviesContextProvider = (props) => {
     try{
       let updatedWatchlist = [...watchlist];
       if(!watchlist.includes(movie.id)) {
-        let { error } = await supabaseClient
-        .from("watchlist").insert({id: movie.id, user_id: user});
-      
+        let { error } = await supabaseClient.from("watchlist").insert({id: movie.id, user_id: user});
         if(!error){
           updatedWatchlist.push(movie.id)
         }else{
@@ -92,8 +89,7 @@ const MoviesContextProvider = (props) => {
 
   const removeFromWatchlist = async (movie, user) => {
     try{
-      let { error } = await supabaseClient
-        .from("watchlist").delete().eq("id", movie.id).eq("user_id", user);
+      let { error } = await supabaseClient.from("watchlist").delete().eq("id", movie.id).eq("user_id", user);
       
       if(!error){
         setWatchlist(watchlist.filter((mId) => mId !== movie.id));
