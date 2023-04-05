@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import { getMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
+import { useAuth } from "../hooks/useAuth";
 import MovieFilterUI, {
   titleFilter,
   genreFilter,
@@ -27,6 +28,8 @@ const HomePage = (props) => {
     [],
     [titleFiltering, genreFiltering]
   );
+  
+  const { session }  = useAuth();
 
   if (isLoading) {
     return <Spinner />;
@@ -50,6 +53,7 @@ const HomePage = (props) => {
 
   return (
     <>
+    {session ? (
       <PageTemplate
         title="Discover Movies"
         movies={displayedMovies}
@@ -57,6 +61,11 @@ const HomePage = (props) => {
           return <AddToFavouritesIcon movie={movie} />
         }}
       />
+    ):(<PageTemplate
+      title="Discover Movies"
+      movies={displayedMovies}
+      action={() => {}} />
+    )}
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
