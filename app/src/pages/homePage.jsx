@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
-import { getMovies } from "../api/tmdb-api";
+import { getMovies, discoverMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
 import Pagination from "../components/pagination";
@@ -25,9 +25,8 @@ const genreFiltering = {
 };
 
 const HomePage = (props) => {
-  const {data, error, isLoading, isError} = useQuery("discover", getMovies);
-  //let {data, error, isLoading, isError, setData} = useState([])
-  //const { data, error, isLoading, isError } = useQuery("discover", getMovies);
+  //const {data, error, isLoading, isError} = useQuery("discover", getMovies);
+  const {data, error, isLoading, isError} = useQuery("discover", discoverMovies);
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [],
     [titleFiltering, genreFiltering]
@@ -36,7 +35,7 @@ const HomePage = (props) => {
   const { session }  = useAuth();
 
   const [currPage, setCurrPage] = useState(1);
-  const [recsPerPage] = useState(10);
+  const [recsPerPage] = useState(12);
 
   if (isLoading) {
     return <Spinner />;
@@ -60,8 +59,7 @@ const HomePage = (props) => {
 
   const indexOfLastRecord = currPage * recsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recsPerPage;
-  console.log("DATA: ", data);
-  const displayedMovies = data["results"].slice(indexOfFirstRecord, indexOfLastRecord);//data.slice(indexOfFirstRecord, indexOfLastRecord);
+  const displayedMovies = data["results"].slice(indexOfFirstRecord, indexOfLastRecord);
   const numOfPages = Math.ceil(data["results"].length / recsPerPage);
 
   return (
