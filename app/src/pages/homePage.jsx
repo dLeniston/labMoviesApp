@@ -1,15 +1,17 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 import { getMovies } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
+import Pagination from "../components/pagination";
 import { useAuth } from "../hooks/useAuth";
 import MovieFilterUI, {
   titleFilter,
   genreFilter,
 } from "../components/movieFilterUI";
+//import { Pagination } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -23,13 +25,18 @@ const genreFiltering = {
 };
 
 const HomePage = (props) => {
-  const { data, error, isLoading, isError } = useQuery("discover", getMovies);
+  const {data, error, isLoading, isError} = useQuery("discover", getMovies);
+  //let {data, error, isLoading, isError, setData} = useState([])
+  //const { data, error, isLoading, isError } = useQuery("discover", getMovies);
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [],
     [titleFiltering, genreFiltering]
   );
   
   const { session }  = useAuth();
+
+  const [currPage, setCurrPage] = useState(1);
+  const [recsPerPage] = useState(10);
 
   if (isLoading) {
     return <Spinner />;
@@ -49,7 +56,13 @@ const HomePage = (props) => {
   };
 
   const movies = data ? data.results : [];
-  const displayedMovies = filterFunction(movies);
+  //let displayedMovies = filterFunction(movies);
+
+  const indexOfLastRecord = currPage * recsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recsPerPage;
+  console.log("DATA: ", data);
+  const displayedMovies = data["results"].slice(indexOfFirstRecord, indexOfLastRecord);//data.slice(indexOfFirstRecord, indexOfLastRecord);
+  const numOfPages = Math.ceil(data["results"].length / recsPerPage);
 
   return (
     <>
@@ -66,6 +79,11 @@ const HomePage = (props) => {
       movies={displayedMovies}
       action={() => {}} />
     )}
+      <Pagination
+        numOfPages={numOfPages}
+        currPage={currPage}
+        setCurrPage={setCurrPage}
+      />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
         titleFilter={filterValues[0].value}
