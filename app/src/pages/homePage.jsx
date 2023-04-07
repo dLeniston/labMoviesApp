@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQueries } from "react-query";
 import Spinner from "../components/spinner";
-import { discover } from "../api/tmdb-api";
+import { fetchResource } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
-//import Pagination from "../components/pagination";
 import { useAuth } from "../hooks/useAuth";
 import MovieFilterUI, {
   titleFilter,
@@ -36,7 +35,7 @@ const HomePage = () => {
     pages.map((page) => {
       return {
         queryKey: ["discover", { url: `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${page}`}],
-        queryFn: discover,
+        queryFn: fetchResource,
       };
     })
   );
@@ -85,11 +84,6 @@ const HomePage = () => {
       movies={displayedMovies}
       action={() => {}} />
     )}
-      {/*<Pagination
-        numOfPages={numOfPages}
-        currPage={currPage}
-        setCurrPage={setCurrPage}
-    />*/}
       <Pagination
         count={numOfPages}
         page={currPage}
