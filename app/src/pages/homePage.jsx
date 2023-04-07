@@ -5,13 +5,13 @@ import Spinner from "../components/spinner";
 import { discover } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
-import Pagination from "../components/pagination";
+//import Pagination from "../components/pagination";
 import { useAuth } from "../hooks/useAuth";
 import MovieFilterUI, {
   titleFilter,
   genreFilter,
 } from "../components/movieFilterUI";
-//import { Pagination } from "@mui/material";
+import { Pagination } from "@mui/material";
 
 const titleFiltering = {
   name: "title",
@@ -66,6 +66,10 @@ const HomePage = () => {
     setFilterValues(updatedFilterSet);
   };
 
+  const handleChange = (e, p) => {
+      setCurrPage(p);
+  };
+
   return (
     <>
     {session ? (
@@ -81,10 +85,17 @@ const HomePage = () => {
       movies={displayedMovies}
       action={() => {}} />
     )}
-      <Pagination
+      {/*<Pagination
         numOfPages={numOfPages}
         currPage={currPage}
         setCurrPage={setCurrPage}
+    />*/}
+      <Pagination
+        count={numOfPages}
+        page={currPage}
+        onChange={handleChange}
+        color="primary"
+        size="large"
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
