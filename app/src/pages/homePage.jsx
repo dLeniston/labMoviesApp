@@ -6,10 +6,7 @@ import { fetchResource } from "../api/tmdb-api";
 import useFiltering from "../hooks/useFiltering";
 import AddToFavouritesIcon from '../components/cardIcons/addToFavourites'
 import { useAuth } from "../hooks/useAuth";
-import MovieFilterUI, {
-  titleFilter,
-  genreFilter,
-} from "../components/movieFilterUI";
+import MovieFilterUI, { titleFilter, genreFilter } from "../components/movieFilterUI";
 import { Pagination } from "@mui/material";
 
 const titleFiltering = {
@@ -54,7 +51,7 @@ const HomePage = () => {
   const indexOfLastRecord = currPage * recsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recsPerPage;
   let displayedMovies = consolidated.slice(indexOfFirstRecord, indexOfLastRecord);
-  const numOfPages = Math.ceil(consolidated.length / recsPerPage)
+  const numOfPages = Math.ceil(consolidated.length / recsPerPage);
 
   const changeFilterValues = (type, value) => {
     const changedFilter = { name: type, value: value };
