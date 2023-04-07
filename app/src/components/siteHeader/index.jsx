@@ -38,7 +38,7 @@ const SiteHeader = () => {
   const limitedOptions = [
     { label: "Home", path: "/" },
     { label: "Upcoming", path: "/movies/upcoming" },
-    { label: "Login", path: "/login"}
+    { label: "Sign in with Google", path: "/login"}
   ];
 
   const fullOptions = [ 

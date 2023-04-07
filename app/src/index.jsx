@@ -12,7 +12,7 @@ import AddMovieReviewPage from './pages/addMovieReviewPage'
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage";
 import WatchlistMoviesPage from "./pages/watchlistMoviesPage";
 import SignOut from "./components/logout";
-import LoginPage from "./pages/loginPage";
+import Login from "./components/login";
 import MoviesContextProvider from "./contexts/moviesContext";
 import AuthContextProvider from "./contexts/authContext";
 
@@ -41,7 +41,7 @@ const App = () => {
                   <Route path="/movies/:id" element={<MoviePage />} />
                   <Route path="/reviews/:id" element={<MovieReviewPage/>} />
                   <Route path="/" element={<HomePage />} />
-                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/login" element={<Login />} />
                   <Route path="/logout" element={<SignOut />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
