@@ -2,7 +2,6 @@ import React from "react";
 
 const Pagination = ({ numOfPages, currPage, setCurrPage }) => {
 
-    console.log("Num of pages: ", numOfPages);
     const pageNumbers = [...Array(numOfPages + 1).keys()].slice(1);
 
     const nextPage = () => {
