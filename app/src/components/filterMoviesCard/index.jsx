@@ -1,5 +1,5 @@
 import React from "react";
-import { getGenres } from "../../api/tmdb-api";
+import { fetchResource } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
 import Card from "@mui/material/Card";
@@ -28,8 +28,11 @@ const styles = {
 };
 
 export default function FilterMoviesCard(props) {
-  
-  const { data, error, isLoading, isError } = useQuery("genres", getGenres);
+
+  const { data, error, isLoading, isError } = useQuery(
+    ["genres", { url: `https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US`}], 
+    fetchResource
+    );
 
   if (isLoading) {
     return <Spinner />;
