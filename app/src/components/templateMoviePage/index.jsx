@@ -3,7 +3,7 @@ import MovieHeader from "../headerMovie";
 import Grid from "@mui/material/Grid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import { getMovieImages } from "../../api/tmdb-api";
+import { fetchResource } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
 
@@ -20,7 +20,11 @@ const styles = {
 };
 
 const TemplateMoviePage = ({ movie, children }) => {
-  const { data , error, isLoading, isError } = useQuery(["images", { id: movie.id }], getMovieImages);
+
+  const { data , error, isLoading, isError } = useQuery(
+    ["images", { url: `https://api.themoviedb.org/3/movie/${movie.id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`}], 
+    fetchResource
+  );
 
   if (isLoading) {
     return <Spinner />;
