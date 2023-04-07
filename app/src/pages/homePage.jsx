@@ -25,13 +25,7 @@ const genreFiltering = {
 };
 
 const HomePage = () => {
-  /*const {data, error, isLoading, isError} = useQuery(["discover", 
-  { url: `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${1}`}], 
-  discover);*/
-  const { filterValues, setFilterValues, filterFunction } = useFiltering(
-    [],
-    [titleFiltering, genreFiltering]
-  );
+  const { filterValues, setFilterValues, filterFunction } = useFiltering([],[titleFiltering, genreFiltering]);
   const { session }  = useAuth();
   const [currPage, setCurrPage] = useState(1);
   const [recsPerPage] = useState(12);
@@ -54,17 +48,12 @@ const HomePage = () => {
     return <Spinner />;
   }
 
-  /*if (isError) {
-    return <h1>{error.message}</h1>;
-  }*/
-
   const allMovies = getMovieQueries.map((q) => q.data["results"]);
   let consolidated = [];
   allMovies.forEach(item => Array.prototype.push.apply(consolidated, item));
-
+  consolidated = consolidated ? filterFunction(consolidated): [];
   const indexOfLastRecord = currPage * recsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recsPerPage;
-  //displayedMovies = data["results"].slice(indexOfFirstRecord, indexOfLastRecord);
   let displayedMovies = consolidated.slice(indexOfFirstRecord, indexOfLastRecord);
   const numOfPages = Math.ceil(consolidated.length / recsPerPage)
 
@@ -76,9 +65,6 @@ const HomePage = () => {
         : [filterValues[0], changedFilter];
     setFilterValues(updatedFilterSet);
   };
-
-  const movies = allMovies ? allMovies.results : [];
-  //displayedMovies = filterFunction(movies);
 
   return (
     <>
