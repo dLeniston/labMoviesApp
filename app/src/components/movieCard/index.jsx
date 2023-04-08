@@ -19,9 +19,10 @@ import { MoviesContext } from "../../contexts/moviesContext";
 
 const styles = {
   card: { maxWidth: 345 },
-  media: { height: 500 },
+  media: { height: 500, zIndex: "auto"},
+  icon: { zIndex: 1, position: "absolute" },
   avatar: {
-    backgroundColor: "rgb(255, 0, 0)",
+    zIndex: 1, position: "absolute"
   },
   watch_avatar: {
     backgroundColor: "rgb(0, 255, 0)",
@@ -47,7 +48,7 @@ export default function MovieCard({ movie, action }) {
 
   return (
     <Card sx={styles.card}>
-      <CardHeader
+      {/*<CardHeader
         sx={styles.header}
         avatar={
           movie.favourite ? (
@@ -64,16 +65,23 @@ export default function MovieCard({ movie, action }) {
             {movie.title}{" "}
           </Typography>
         }
-      />
+      />*/}
       <CardActionArea component={Link} to={`/movies/${movie.id}`} state={{fav: movie.favourite}}>
-      <CardMedia
-        sx={styles.media}
-        image={
-          movie.poster_path
-            ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-            : img
-        }
-      />
+        <div>
+          {movie.favourite ? (
+                <FavoriteIcon fontSize="large" color="error" sx={styles.icon} />
+            ) : movie.watchlist ? (
+              <ListIcon fontSize="large" color="success" sx={styles.icon} />
+              ) : null}
+        <CardMedia
+          sx={styles.media}
+          image={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+              : img
+          }
+        />
+        </div>
       </CardActionArea>
       <CardContent>
         <Grid container>
@@ -91,6 +99,9 @@ export default function MovieCard({ movie, action }) {
           </Grid>
         </Grid>
       </CardContent>
+      <CardActions disableSpacing>
+        {action(movie)}
+      </CardActions>
     </Card>
   );
 }
