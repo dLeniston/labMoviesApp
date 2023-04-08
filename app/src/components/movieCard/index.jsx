@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
+import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
@@ -30,7 +31,7 @@ const styles = {
 export default function MovieCard({ movie, action }) {
 
   
-  const { favourites, watchlist, addToFavourites } = useContext(MoviesContext);
+  const { favourites, watchlist } = useContext(MoviesContext);
 
   if (favourites.find((id) => id === movie.id)) {
     movie.favourite = true;
@@ -59,11 +60,12 @@ export default function MovieCard({ movie, action }) {
           </Avatar> ) : null
         }
         title={
-          <Typography variant="h5" component="p">
+          <Typography variant="h6" component="p">
             {movie.title}{" "}
           </Typography>
         }
       />
+      <CardActionArea component={Link} to={`/movies/${movie.id}`} state={{fav: movie.favourite}}>
       <CardMedia
         sx={styles.media}
         image={
@@ -72,6 +74,7 @@ export default function MovieCard({ movie, action }) {
             : img
         }
       />
+      </CardActionArea>
       <CardContent>
         <Grid container>
           <Grid item xs={6}>
@@ -88,14 +91,6 @@ export default function MovieCard({ movie, action }) {
           </Grid>
         </Grid>
       </CardContent>
-      <CardActions disableSpacing>
-        {action(movie)}
-        <Link to={`/movies/${movie.id}`} state={{fav: movie.favourite}}>
-            <Button variant="outlined" size="medium" color="primary">
-              More Info ...
-            </Button>
-        </Link>
-      </CardActions>
     </Card>
   );
 }
