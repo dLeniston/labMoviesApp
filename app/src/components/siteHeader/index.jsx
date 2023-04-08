@@ -22,7 +22,6 @@ const styles = {
   avatar: {
     flexGrow: 1,
   },
-  // offset: theme.mixins.toolbar,
 };
 
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
@@ -36,13 +35,13 @@ const SiteHeader = () => {
   const { session }  = useAuth();
 
   const limitedOptions = [
-    { label: "Home", path: "/" },
+    { label: "Discover", path: "/" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Sign in with Google", path: "/login"}
   ];
 
   const fullOptions = [ 
-    { label: "Home", path: "/" },
+    { label: "Discover", path: "/" },
     { label: "Upcoming", path: "/movies/upcoming" },
     { label: "Favorites", path: "/movies/favourites" },
     { label: "Watchlist", path: "/movies/watchlist" },
@@ -137,8 +136,6 @@ const SiteHeader = () => {
         </Toolbar>
       </AppBar>
       <Offset />
-
-      {/* <div className={classes.offset} /> */}
     </>
   );
 };

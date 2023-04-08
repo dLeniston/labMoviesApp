@@ -6,13 +6,13 @@ import MovieList from "../movieList";
 const styles = {
   root: { 
     backgroundColor: "#bfbfbf",
-  }
+  },
 };
 
 function MovieListPageTemplate({ movies, title, action }) {
   return (
     <Grid container sx={styles.root}>
-      <Grid item xs={12}>
+      <Grid item xs={12} >
         <Header title={title} />
       </Grid>
       <Grid item container spacing={5}>

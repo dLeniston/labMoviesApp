@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQueries } from "react-query";
 import Spinner from "../components/spinner";
@@ -85,8 +85,8 @@ const HomePage = () => {
         count={numOfPages}
         page={currPage}
         onChange={handleChange}
-        color="primary"
-        size="large"
+        showFirstButton 
+        showLastButton
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}

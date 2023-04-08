@@ -13,6 +13,8 @@ import FavouriteMoviesPage from "./pages/favouriteMoviesPage";
 import WatchlistMoviesPage from "./pages/watchlistMoviesPage";
 import SignOut from "./components/logout";
 import Login from "./components/login";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import themeStyle from "./theme";
 import MoviesContextProvider from "./contexts/moviesContext";
 import AuthContextProvider from "./contexts/authContext";
 
@@ -26,12 +28,15 @@ const queryClient = new QueryClient({
   },
 });
 
+const theme = createTheme(themeStyle);
+
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthContextProvider>
           <MoviesContextProvider>
+          <ThemeProvider theme={theme}>
               <SiteHeader />
                 <Routes>
                   <Route path="/movies/upcoming" element={<UpcomingMovies />} />
@@ -45,6 +50,7 @@ const App = () => {
                   <Route path="/logout" element={<SignOut />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
+                </ThemeProvider>
             </MoviesContextProvider>
         </AuthContextProvider>
       </BrowserRouter>

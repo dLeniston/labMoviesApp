@@ -12,10 +12,11 @@ const styles = {
     alignItems: "center",
     flexWrap: "wrap",
     marginBottom: 1.5,
+    p: 2
   },
 };
 
-const Header = (props ) => {
+const Header = (props) => {
   const title = props.title
 
   return (
@@ -26,7 +27,7 @@ const Header = (props ) => {
         <ArrowBackIcon color="primary" fontSize="large" />
       </IconButton>
 
-      <Typography variant="h4" component="h3">
+      <Typography variant="h3" component="h3">
         {title}
       </Typography>
       <IconButton
