@@ -16,6 +16,7 @@ import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png'
 import Avatar from "@mui/material/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
+import { grey } from "@mui/material/colors";
 
 const styles = {
   card: { maxWidth: 345 },
@@ -77,10 +78,10 @@ export default function MovieCard({ movie, action }) {
             />
             {isHovering && (
               <div>
-                <Typography variant="h6" component="p" sx={{color:"white", fontWeight: "bold", zIndex:"3", position: "absolute", top: 20, left: 20 }}>
+                <Typography variant="h6" component="p" sx={{color:grey[900], fontWeight: "bold", zIndex:"3", position: "absolute", top: 50, left: 20 }}>
                   {movie.title}{" "}
                 </Typography>
-                <Typography variant="h6" component="p" sx={{color:"white", zIndex:"3", position: "absolute", bottom: 10, left: 20 }}>
+                <Typography variant="h6" component="p" sx={{fontSize: "25px", color:grey[900], zIndex:"3", position: "absolute", bottom: 10, left: 20 }}>
                   Click to view more...
                 </Typography>
               </div>

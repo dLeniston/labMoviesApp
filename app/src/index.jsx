@@ -17,6 +17,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import themeStyle from "./theme";
 import MoviesContextProvider from "./contexts/moviesContext";
 import AuthContextProvider from "./contexts/authContext";
+import CssBaseline from '@mui/material/CssBaseline';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,6 +39,7 @@ const App = () => {
           <MoviesContextProvider>
           <ThemeProvider theme={theme}>
               <SiteHeader />
+              <CssBaseline />
                 <Routes>
                   <Route path="/movies/upcoming" element={<UpcomingMovies />} />
                   <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />

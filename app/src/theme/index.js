@@ -4,7 +4,7 @@ const themeStyle = {
   palette: {
     mode: 'light',
     primary: {
-      main: blue[500]
+      main: grey[900]
     },
     secondary: {
       light: red[500],
@@ -29,7 +29,7 @@ const themeStyle = {
       main: lightBlue[500]
     },
     text: {
-      primary: grey[900],
+      primary: grey[300],
       secondary: grey[700],
       disabled: grey[500]
     },
@@ -47,7 +47,10 @@ const themeStyle = {
     },
     background: {
       default: orange[300],
-      paper: grey[200]
+      paper: grey[800]
+    },
+    body: {
+      default: orange[300]
     },
     common: {
       black: grey[900],
