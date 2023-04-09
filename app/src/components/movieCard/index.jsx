@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -19,7 +19,7 @@ import { MoviesContext } from "../../contexts/moviesContext";
 
 const styles = {
   card: { maxWidth: 345 },
-  media: { height: 500, zIndex: "auto"},
+  media: { height: 500, zIndex: "auto" },
   icon: { zIndex: 1, position: "absolute" },
   avatar: {
     zIndex: 1, position: "absolute"
@@ -33,6 +33,15 @@ export default function MovieCard({ movie, action }) {
 
   
   const { favourites, watchlist } = useContext(MoviesContext);
+  const [isHovering, setIsHovering] = useState(false);
+  
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsHovering(false);
+  };
 
   if (favourites.find((id) => id === movie.id)) {
     movie.favourite = true;
@@ -48,24 +57,6 @@ export default function MovieCard({ movie, action }) {
 
   return (
     <Card sx={styles.card}>
-      {/*<CardHeader
-        sx={styles.header}
-        avatar={
-          movie.favourite ? (
-            <Avatar sx={styles.avatar}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : movie.watchlist ? (
-          <Avatar sx={styles.watch_avatar}>
-            <ListIcon />
-          </Avatar> ) : null
-        }
-        title={
-          <Typography variant="h6" component="p">
-            {movie.title}{" "}
-          </Typography>
-        }
-      />*/}
       <CardActionArea component={Link} to={`/movies/${movie.id}`} state={{fav: movie.favourite}}>
         <div>
           {movie.favourite ? (
@@ -73,14 +64,26 @@ export default function MovieCard({ movie, action }) {
             ) : movie.watchlist ? (
               <ListIcon fontSize="large" color="success" sx={styles.icon} />
               ) : null}
-        <CardMedia
-          sx={styles.media}
-          image={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-              : img
-          }
-        />
+            <CardMedia
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+              sx={styles.media}
+              image={
+                movie.poster_path
+                  ? `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+                  : img
+              }
+            />
+            {isHovering && (
+              <div>
+                <Typography variant="h6" component="p" sx={{color:"white", fontWeight: "bold", zIndex:"3", position: "absolute", top: 20, left: 20 }}>
+                  {movie.title}{" "}
+                </Typography>
+                <Typography variant="h6" component="p" sx={{color:"white", zIndex:"3", position: "absolute", bottom: 10, left: 20 }}>
+                  Click to view more...
+                </Typography>
+              </div>
+            )}
         </div>
       </CardActionArea>
       <CardContent>
