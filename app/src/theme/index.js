@@ -1,4 +1,4 @@
-import { red, orange, yellow, green, blue, deepPurple, lightBlue, grey } from "@mui/material/colors";
+import { red, yellow, green, blue, deepPurple, lightBlue, grey } from "@mui/material/colors";
 
 const themeStyle = {
   palette: {
@@ -46,11 +46,11 @@ const themeStyle = {
       selectedOpacity: 1
     },
     background: {
-      default: orange[300],
+      default: grey[900],
       paper: grey[800]
     },
     body: {
-      default: orange[300]
+      default: grey[300]
     },
     common: {
       black: grey[900],
@@ -59,21 +59,25 @@ const themeStyle = {
     tonalOffset: 0.2
   },
   typography: {
-    fontFamily: ["Helvetica", "Roboto", "Lato", "Open Sans", "Sans Serif"],
+    fontFamily: ["Lato"],
     fontSize: 16,
     fontWeightRegular: 400,
     fontWeightBold: 700,
     lineHeight: 1.5,
     h1: {
-      fontFamily: "Helvetica",
+      fontFamily: "Lato",
       color: grey[100],
       fontSize: "6rem",
       fontWeight: 400,
       lineHeight: 1.167,
       lettingSpacing: "-0.01562em"
     },
+    h6: {
+      fontFamily: "Lato",
+    },
     body1: {
       color: grey[100],
+      fontFamily: "Lato",
       fontSize: "1.2rem",
       fontWeight: 500
     }
@@ -111,17 +115,6 @@ const themeStyle = {
       }
     },
     MuiTypography: {
-      variants: [
-        {
-          props: { variant: "test" },
-          style: {
-            color: grey[200],
-            fontSize: 80,
-            fontWeight: 800,
-            textShadow: "2px 2px black"
-          }
-        }
-      ],
       defaultProps: {
         style: {
           textAlign: "center"
