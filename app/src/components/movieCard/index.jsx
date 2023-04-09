@@ -34,6 +34,7 @@ export default function MovieCard({ movie, action }) {
   
   const { favourites, watchlist } = useContext(MoviesContext);
   const [isHovering, setIsHovering] = useState(false);
+  const year = movie.release_date.split("-");
   
   const handleMouseOver = () => {
     setIsHovering(true);
@@ -87,17 +88,16 @@ export default function MovieCard({ movie, action }) {
         </div>
       </CardActionArea>
       <CardContent>
-        <Grid container>
-          <Grid item xs={6}>
-            <Typography variant="h6" component="p">
-              <CalendarIcon fontSize="small" />
-              {movie.release_date}
+        <Grid container spacing={{ xs: 12, md: 10 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+          <Grid item >
+            <Typography variant="h6" component="p" sx={{fontWeight: "bold"}}>
+              {year[0] || "N/A"}
             </Typography>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item >
             <Typography variant="h6" component="p">
-              <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
+              <StarRateIcon fontSize="small" sx={{color: "#F1C40F"}} />
+              {"  "}{movie.vote_average}{` (${movie.vote_count.toLocaleString()})`}
             </Typography>
           </Grid>
         </Grid>
