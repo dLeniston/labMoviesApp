@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import MovieHeader from "../headerMovie";
 import Grid from "@mui/material/Grid";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import { getMovieImages } from "../../api/tmdb-api";
+import { fetchResource } from "../../api/tmdb-api";
 import { useQuery } from "react-query";
-import Spinner from '../spinner'
+import Spinner from '../spinner';
+import SwipeableViews from 'react-swipeable-views';
+import { autoPlay } from 'react-swipeable-views-utils';
+
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 const styles = {
   gridListRoot: {
@@ -17,12 +19,28 @@ const styles = {
     width: 450,
     height: '100vh',
   },
+  slide: {
+    padding: 50,
+    minHeight: 100,
+    color: '#fff',
+  },
+  img: {
+    maxWidth: "100%",
+    maxHeight: "100%"
+  }
 };
 
 const TemplateMoviePage = ({ movie, children }) => {
+
+  const { index } = useState(0)
+
+  const handleChangeIndex = index => {
+    setState({index,});
+  };
+
   const { data , error, isLoading, isError } = useQuery(
-    ["images", { id: movie.id }],
-    getMovieImages
+    ["images", { url: `https://api.themoviedb.org/3/movie/${movie.id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`}], 
+    fetchResource
   );
 
   if (isLoading) {
@@ -37,27 +55,20 @@ const TemplateMoviePage = ({ movie, children }) => {
   return (
     <>
       <MovieHeader movie={movie} />
-
-      <Grid container spacing={5} style={{ padding: "15px" }}>
+      <Grid container spacing={5} style={{ padding: "30px" }}>
         <Grid item xs={3}>
           <div sx={styles.gridListRoot}>
-            <ImageList cols={1}>
-              {images.map((image) => (
-                <ImageListItem
-                  key={image.file_path}
-                  sx={styles.gridListTile}
-                  cols={1}
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
-                    alt={image.poster_path}
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
+            <AutoPlaySwipeableViews index={index} onChangeIndex={handleChangeIndex}>
+                {images.map((image) => (
+                    <img key={image.file_path}
+                      style={styles.img}
+                      src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                      alt={image.poster_path}
+                    />
+                ))}
+              </AutoPlaySwipeableViews>
           </div>
         </Grid>
-
         <Grid item xs={9}>
           {children}
         </Grid>

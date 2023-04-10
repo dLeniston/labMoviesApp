@@ -3,13 +3,13 @@ import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
-import StarRate from "@mui/icons-material/StarRate";
+import StarRateIcon from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-
+import MovieReviews from '../movieReviews'
+import SwipeableViews from 'react-swipeable-views';
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
-import Drawer from "@mui/material/Drawer";
-import MovieReviews from '../movieReviews'
+import { openInNewTab } from "../../util";
 
 const styles = {
   chipSet: {
@@ -26,23 +26,34 @@ const styles = {
   },
   fab: { 
     position: "fixed",
-    top: 50,
-    right: 2,
+    top: 90,
+    right: 20,
   },
+  overview: {
+    paddingTop: "20px",
+    paddingBottom: "20px"
+  },
+  slideContainer: {
+    height: 300,
+  },
+  reviews: {
+    marginTop: "50px"
+  }
 };
 
 const MovieDetails = ( {movie}) => {
-  const [drawerOpen, setDrawerOpen] = useState(false); // New
 
   return (
     <>
-      <Typography variant="h5" component="h3">
-        Overview
+    <Paper>
+      <Typography variant="h4" component="h3" sx={styles.overview}>
+        {movie.tagline || "Overview"}
       </Typography>
-
-      <Typography variant="h6" component="p">
-        {movie.overview}
-      </Typography>
+      <div style={{width: "80%", margin: "auto"}}>
+        <Typography variant="h6" component="p">
+          {movie.overview}
+        </Typography>
+      </div>
 
       <Paper component="ul" sx={styles.chipSet}>
         <li>
@@ -50,34 +61,39 @@ const MovieDetails = ( {movie}) => {
         </li>
         {movie.genres.map((g) => (
           <li key={g.name}>
-            <Chip label={g.name}  />
+            <Chip label={g.name} sx={{marginLeft: "5px"}}  />
           </li>
         ))}
       </Paper>
       <Paper component="ul" sx={styles.chipSet}>
-        <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
+        <Chip color="primary" icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         <Chip
+          color="primary"
           icon={<MonetizationIcon />}
           label={`${movie.revenue.toLocaleString()}`}
+          sx={{marginLeft: "5px"}}
         />
         <Chip
-          icon={<StarRate />}
+          color="primary"
+          icon={<StarRateIcon />}
           label={`${movie.vote_average} (${movie.vote_count}`}
+          sx={{marginLeft: "5px"}}
         />
-        <Chip label={`Released: ${movie.release_date}`} />
+        <Chip color="primary" label={`Released: ${movie.release_date}`} sx={{marginLeft: "5px"}} />
+        <div style={{marginTop: "30px", width: "95%"}}>
+          <Typography variant="h4" component="h3" sx={{paddingBottom: "10px"}}>
+            Reviews
+          </Typography>
+          <SwipeableViews containerStyle={styles.slideContainer}>
+            <MovieReviews movie={movie} />
+          </SwipeableViews>
+        </div>
+        </Paper>
       </Paper>
-      <Fab    
-        color="secondary"
-        variant="extended"
-        onClick={() =>setDrawerOpen(true)}
-        sx={styles.fab}
-      >
+      <Fab color="secondary" variant="extended" onClick={() => openInNewTab(`${movie.homepage}`)} sx={styles.fab} >
         <NavigationIcon />
-        Reviews
+          Movie Homepage
       </Fab>
-      <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <MovieReviews movie={movie} />
-      </Drawer>
     </>
   );
 };

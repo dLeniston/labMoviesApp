@@ -1,8 +1,6 @@
 import React from "react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
+import { grey } from "@mui/material/colors";
 import Typography from "@mui/material/Typography";
 
 const styles = {
@@ -12,28 +10,21 @@ const styles = {
     alignItems: "center",
     flexWrap: "wrap",
     marginBottom: 1.5,
+    p: 2,
+    color: grey[900],
+    boxShadow: "none",
+    backgroundColor: grey[400]
   },
 };
 
-const Header = (props ) => {
+const Header = (props) => {
   const title = props.title
 
   return (
     <Paper component="div" sx={styles.root}>
-      <IconButton
-        aria-label="go back"
-      >
-        <ArrowBackIcon color="primary" fontSize="large" />
-      </IconButton>
-
-      <Typography variant="h4" component="h3">
+      <Typography variant="h3" component="h3" sx={{fontWeight: "bold"}}>
         {title}
       </Typography>
-      <IconButton
-        aria-label="go forward"
-      >
-        <ArrowForwardIcon color="primary" fontSize="large" />
-      </IconButton>
     </Paper>
   );
 };

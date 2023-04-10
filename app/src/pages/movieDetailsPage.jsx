@@ -1,18 +1,18 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { getMovie } from '../api/tmdb-api'
+import { fetchResource } from '../api/tmdb-api'
 import { useQuery } from "react-query";
 import Spinner from '../components/spinner'
 import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
 
-const MovieDetailsPage = (props) => {
+const MovieDetailsPage = () => {
   
   const { id } = useParams();
 
   const { data: movie, error, isLoading, isError } = useQuery(
-    ["movie", { id: id }],
-    getMovie
+    ["movie", { url: `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}` }],
+    fetchResource
   );
 
   if (isLoading) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PageTemplate from "../components/templateMovieListPage";
 import { useQueries } from "react-query";
 import Spinner from "../components/spinner";
@@ -24,14 +24,14 @@ const HomePage = () => {
   const { filterValues, setFilterValues, filterFunction } = useFiltering([],[titleFiltering, genreFiltering]);
   const { session }  = useAuth();
   const [currPage, setCurrPage] = useState(1);
-  const [recsPerPage] = useState(12);
+  const [recsPerPage] = useState(3);
   const pages = [1,2,3,4,5,6,7,8,9,10];
 
   // Create array of queries to get pages of movies in parallel.
   const getMovieQueries = useQueries(
     pages.map((page) => {
       return {
-        queryKey: ["discover", { url: `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${page}`}],
+        queryKey: ["discover", { url: `https://api.themoviedb.org/3/discover/movie/?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${page}`}],
         queryFn: fetchResource,
       };
     })
@@ -85,8 +85,8 @@ const HomePage = () => {
         count={numOfPages}
         page={currPage}
         onChange={handleChange}
-        color="primary"
-        size="large"
+        showFirstButton 
+        showLastButton
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}

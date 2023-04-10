@@ -12,9 +12,12 @@ import AddMovieReviewPage from './pages/addMovieReviewPage'
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage";
 import WatchlistMoviesPage from "./pages/watchlistMoviesPage";
 import SignOut from "./components/logout";
-import LoginPage from "./pages/loginPage";
+import Login from "./components/login";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import themeStyle from "./theme";
 import MoviesContextProvider from "./contexts/moviesContext";
 import AuthContextProvider from "./contexts/authContext";
+import CssBaseline from '@mui/material/CssBaseline';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,25 +29,30 @@ const queryClient = new QueryClient({
   },
 });
 
+const theme = createTheme(themeStyle);
+
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthContextProvider>
           <MoviesContextProvider>
+          <ThemeProvider theme={theme}>
               <SiteHeader />
+              <CssBaseline />
                 <Routes>
                   <Route path="/movies/upcoming" element={<UpcomingMovies />} />
                   <Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
                   <Route path="/movies/watchlist" element={<WatchlistMoviesPage />} />
-                  <Route path="/reviews/form" element={<AddMovieReviewPage/>} />
+                  {/*<Route path="/reviews/form" element={<AddMovieReviewPage/>} />*/}
                   <Route path="/movies/:id" element={<MoviePage />} />
                   <Route path="/reviews/:id" element={<MovieReviewPage/>} />
                   <Route path="/" element={<HomePage />} />
-                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/login" element={<Login />} />
                   <Route path="/logout" element={<SignOut />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
+                </ThemeProvider>
             </MoviesContextProvider>
         </AuthContextProvider>
       </BrowserRouter>
