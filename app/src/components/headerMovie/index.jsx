@@ -17,6 +17,7 @@ const styles = {
     alignItems: "center",
     flexWrap: "wrap",
     padding: 1.5,
+    paddingTop: "30px"
   },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",
@@ -30,31 +31,13 @@ const MovieHeader = (props) => {
 
   return (
     <Paper component="div" sx={styles.root}>
-      <IconButton aria-label="go back">
-        <ArrowBackIcon color="primary" fontSize="large" />
-      </IconButton>
-
-      <CardHeader
-        avatar={
-          fav ? (
-            <Avatar sx={styles.avatar}>
-              <FavoriteIcon />
-            </Avatar>
-          ) : null
-        }
-      />
-
-      <Typography variant="h4" component="h3">
+      <Typography variant="h4" component="h4">
         {movie.title}{"   "}
-        <a href={movie.homepage}>
+       {/*} <a href={movie.homepage}>
           <HomeIcon color="primary"  fontSize="='large"/>
-        </a>
-        <br />
-        <span>{`${movie.tagline}`} </span>
+        </a>*/}
+        {/*<span>{`${movie.tagline}`} </span>*/}
       </Typography>
-      <IconButton aria-label="go forward">
-        <ArrowForwardIcon color="primary" fontSize="large" />
-      </IconButton>
     </Paper>
   );
 };

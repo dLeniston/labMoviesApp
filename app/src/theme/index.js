@@ -38,11 +38,11 @@ const themeStyle = {
       activeOpacity: 1,
       disabled: grey[700],
       disabledBackground: grey[200],
-      hover: blue[800],
+      hover: grey[500],
       hoverOpacity: 0.7,
-      focus: blue[600],
+      focus: grey[700],
       focusOpacity: 1,
-      selected: lightBlue[300],
+      selected: grey[700],
       selectedOpacity: 1
     },
     background: {

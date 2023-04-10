@@ -19,7 +19,7 @@ function MovieListPageTemplate({ movies, title, action }) {
         <Grid item xs={12} sx={{paddingBottom: "30px" }}>
           <Header title={title} />
         </Grid>
-        <Grid item container alignItems="center" justifyContent="center" spacing={{ xs: 12, md: 14 }} columns={{ xs: 4, sm: 8, md: 14 }}>
+        <Grid item container alignItems="center" justifyContent="center" spacing={{ xs: 12, md: 20 }} columns={{ xs: 4, sm: 8, md: 15 }}>
           <MovieList action={action} movies={movies} />
         </Grid>
       </Grid>

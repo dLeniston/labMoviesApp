@@ -24,7 +24,7 @@ const UpcomingMovies = () => {
   const { session }  = useAuth();
   const { filterValues, setFilterValues, filterFunction } = useFiltering([],[titleFiltering, genreFiltering]);
   const [currPage, setCurrPage] = useState(1);
-  const [recsPerPage] = useState(12);
+  const [recsPerPage] = useState(3);
   const pages = [1,2,3,4,5,6,7,8,9,10];
 
   // Create array of queries to get pages of movies in parallel.

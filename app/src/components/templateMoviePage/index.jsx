@@ -54,9 +54,8 @@ const TemplateMoviePage = ({ movie, children }) => {
 
   return (
     <>
-      <MovieHeader movie={movie} />
-
-      <Grid container spacing={5} style={{ padding: "15px" }}>
+        <MovieHeader movie={movie} />
+      <Grid container spacing={5} style={{ padding: "30px" }}>
         <Grid item xs={3}>
           <div sx={styles.gridListRoot}>
             <AutoPlaySwipeableViews index={index} onChangeIndex={handleChangeIndex}>
