@@ -9,6 +9,7 @@ import MovieReviews from '../movieReviews'
 import SwipeableViews from 'react-swipeable-views';
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
+import { openInNewTab } from "../../util";
 
 const styles = {
   chipSet: {
@@ -41,11 +42,6 @@ const styles = {
 };
 
 const MovieDetails = ( {movie}) => {
-
-  const openInNewTab = (url) => {
-    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
-    if (newWindow) newWindow.opener = null
-  }
 
   return (
     <>

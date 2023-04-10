@@ -69,7 +69,6 @@ const TemplateMoviePage = ({ movie, children }) => {
               </AutoPlaySwipeableViews>
           </div>
         </Grid>
-
         <Grid item xs={9}>
           {children}
         </Grid>
