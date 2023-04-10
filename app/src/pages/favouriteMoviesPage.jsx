@@ -73,7 +73,7 @@ const FavouriteMoviesPage = () => {
           return (
             <>
               <RemoveFromFavourites movie={movie} />
-              <WriteReview movie={movie} />
+              {/*<WriteReview movie={movie} />*/}
             </>
           );
         }}

@@ -60,7 +60,7 @@ export default function MovieCard({ movie, action }) {
           {movie.favourite ? (
                 <FavoriteIcon fontSize="large" color="error" sx={styles.icon} />
             ) : movie.watchlist ? (
-              <ListIcon fontSize="large" color="success" sx={styles.icon} />
+                <ListIcon fontSize="large" color="success" sx={styles.icon} />
               ) : null}
             <CardMedia
               onMouseOver={handleMouseOver}

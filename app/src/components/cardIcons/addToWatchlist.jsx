@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
 import IconButton from "@mui/material/IconButton";
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd'
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import Tooltip from '@mui/material/Tooltip';
+import { grey } from "@mui/material/colors";
 import { useAuth } from "../../hooks/useAuth";
 
 const AddToWatchlistIcon = ({ movie }) => {
@@ -13,9 +15,11 @@ const AddToWatchlistIcon = ({ movie }) => {
     context.addToWatchlist(movie, session?.user?.id);
   };
   return (
-    <IconButton aria-label="add to watchlist" onClick={onUserSelect}>
-      <PlaylistAddIcon color="primary" fontSize="large" />
-    </IconButton>
+    <Tooltip title={`Add "` + movie.title + `" to watchlist`}>
+      <IconButton aria-label="add to watchlist" onClick={onUserSelect}>
+        <PlaylistAddIcon fontSize="large" sx={{color: grey[300]}} />
+      </IconButton>
+    </Tooltip>
   );
 };
 

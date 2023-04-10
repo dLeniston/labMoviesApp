@@ -5,11 +5,11 @@ import Spinner from '../spinner'
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SortIcon from '@mui/icons-material/Sort';
+import { grey } from "@mui/material/colors";
 
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
@@ -24,6 +24,8 @@ const styles = {
     margin: 1,
     minWidth: 220,
     backgroundColor: "rgb(255, 255, 255)",
+    input: { color: grey[900] },
+    label: { color: grey[900] }
   },
 };
 
@@ -48,7 +50,7 @@ export default function FilterMoviesCard(props) {
 
   const handleUserImput = (e, type, value) => {
     e.preventDefault();
-    props.onUserInput(type, value); // NEW
+    props.onUserInput(type, value);
   };
 
   const handleTextChange = (e, props) => {
@@ -63,9 +65,9 @@ export default function FilterMoviesCard(props) {
     <>
     <Card sx={styles.root} variant="outlined">
       <CardContent>
-        <Typography variant="h5" component="h1">
+        <Typography variant="h5" component="h1" sx={{paddingBottom: "10px"}}>
           <FilterAltIcon fontSize="large" />
-          Filter the movies.
+          Filter Movies
         </Typography>
         <TextField
           sx={styles.formControl}
@@ -78,14 +80,13 @@ export default function FilterMoviesCard(props) {
         />
 
         <FormControl sx={styles.formControl}>
-          <InputLabel id="genre-label">Genre</InputLabel>
           <Select
             labelId="genre-label"
             id="genre-select"
             value={props.genreFilter}
             onChange={handleGenreChange}
+            sx={{color: grey[900] }}
           >
-
             {genres.map((genre) => {
               return (
                 <MenuItem key={genre.id} value={genre.id}>
