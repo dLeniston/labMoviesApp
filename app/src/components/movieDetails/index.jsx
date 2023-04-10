@@ -5,11 +5,8 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-
-import NavigationIcon from "@mui/icons-material/Navigation";
-import Fab from "@mui/material/Fab";
-import Drawer from "@mui/material/Drawer";
 import MovieReviews from '../movieReviews'
+import SwipeableViews from 'react-swipeable-views';
 
 const styles = {
   chipSet: {
@@ -33,10 +30,15 @@ const styles = {
     paddingTop: "20px",
     paddingBottom: "20px"
   },
+  slideContainer: {
+    height: 300,
+  },
+  reviews: {
+    marginTop: "50px"
+  }
 };
 
 const MovieDetails = ( {movie}) => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
     <>
@@ -75,20 +77,16 @@ const MovieDetails = ( {movie}) => {
           sx={{marginLeft: "5px"}}
         />
         <Chip color="primary" label={`Released: ${movie.release_date}`} sx={{marginLeft: "5px"}} />
+        <div style={{marginTop: "20px"}}>
+          <Typography variant="h4" component="h3" align="left">
+            Reviews
+          </Typography>
+          <SwipeableViews containerStyle={styles.slideContainer}>
+            <MovieReviews movie={movie} />
+          </SwipeableViews>
+        </div>
+        </Paper>
       </Paper>
-      </Paper>
-      <Fab    
-        color="secondary"
-        variant="extended"
-        onClick={() =>setDrawerOpen(true)}
-        sx={styles.fab}
-      >
-        <NavigationIcon />
-        Reviews
-      </Fab>
-      <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <MovieReviews movie={movie} />
-      </Drawer>
     </>
   );
 };
