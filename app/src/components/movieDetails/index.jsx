@@ -7,6 +7,8 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
 import MovieReviews from '../movieReviews'
 import SwipeableViews from 'react-swipeable-views';
+import NavigationIcon from "@mui/icons-material/Navigation";
+import Fab from "@mui/material/Fab";
 
 const styles = {
   chipSet: {
@@ -23,8 +25,8 @@ const styles = {
   },
   fab: { 
     position: "fixed",
-    top: 50,
-    right: 2,
+    top: 90,
+    right: 20,
   },
   overview: {
     paddingTop: "20px",
@@ -39,6 +41,11 @@ const styles = {
 };
 
 const MovieDetails = ( {movie}) => {
+
+  const openInNewTab = (url) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
 
   return (
     <>
@@ -77,8 +84,8 @@ const MovieDetails = ( {movie}) => {
           sx={{marginLeft: "5px"}}
         />
         <Chip color="primary" label={`Released: ${movie.release_date}`} sx={{marginLeft: "5px"}} />
-        <div style={{marginTop: "20px"}}>
-          <Typography variant="h4" component="h3" align="left">
+        <div style={{marginTop: "30px", width: "95%"}}>
+          <Typography variant="h4" component="h3" sx={{paddingBottom: "10px"}}>
             Reviews
           </Typography>
           <SwipeableViews containerStyle={styles.slideContainer}>
@@ -87,6 +94,10 @@ const MovieDetails = ( {movie}) => {
         </div>
         </Paper>
       </Paper>
+      <Fab color="secondary" variant="extended" onClick={() => openInNewTab(`${movie.homepage}`)} sx={styles.fab} >
+        <NavigationIcon />
+          Movie Homepage
+      </Fab>
     </>
   );
 };
