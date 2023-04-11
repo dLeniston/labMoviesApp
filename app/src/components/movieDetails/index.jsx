@@ -10,6 +10,11 @@ import SwipeableViews from 'react-swipeable-views';
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import { openInNewTab } from "../../util";
+import { VideoPlayer } from "../videoPlayer"; //CORS issue lead to move away from custom video player to embedded youtube with React Player
+import ReactPlayer from "react-player"
+import { fetchResource } from '../../api/tmdb-api'
+import Spinner from '../../components/spinner'
+import { useQuery } from "react-query";
 
 const styles = {
   chipSet: {
@@ -41,7 +46,20 @@ const styles = {
   }
 };
 
-const MovieDetails = ( {movie}) => {
+const MovieDetails = ( { movie } ) => {
+
+  const { data: media, error, isLoading, isError } = useQuery(
+    ["movie", { url: `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${import.meta.env.VITE_TMDB_KEY}` }],
+    fetchResource
+  );
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
 
   return (
     <>
@@ -80,6 +98,16 @@ const MovieDetails = ( {movie}) => {
           sx={{marginLeft: "5px"}}
         />
         <Chip color="primary" label={`Released: ${movie.release_date}`} sx={{marginLeft: "5px"}} />
+        <div style={{paddingTop: "50px", paddingBottom: "30px", width: "90%" }}>
+          <Typography variant="h4" component="h3" sx={{paddingBottom: "10px"}}>Media</Typography>
+          <SwipeableViews enableMouseEvents>
+            {media.results.map((video) => (
+                      <ReactPlayer url={`http://www.youtube.com/watch?v=${video.key}`} 
+                        style={{margin: "auto", overflow: "hidden"}} controls="true"
+                      />
+            ))}
+          </SwipeableViews>
+        </div>
         <div style={{marginTop: "30px", width: "95%"}}>
           <Typography variant="h4" component="h3" sx={{paddingBottom: "10px"}}>
             Reviews
