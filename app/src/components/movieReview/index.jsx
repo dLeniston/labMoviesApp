@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Avatar from '@mui/material/Avatar';
+import PersonIcon from '@mui/icons-material/Person';
 import { grey } from "@mui/material/colors";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -43,6 +44,8 @@ const MovieReview =  ({ review }) => {
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
   }, []);
 
+  console.log("Reviewer: ", review)
+
   return (
     <>
       <Paper>
@@ -50,7 +53,15 @@ const MovieReview =  ({ review }) => {
             <Typography variant="h4" component="h3">
               <b>Review By:</b> {review.author}
             </Typography>
-            <Avatar alt={review.author} src={review.author_details.avatar_path.substring(1)} sx={{ width: 90, height: 90, boxShadow: 3}} />
+          { review.author_details.avatar_path ? (
+              <Avatar alt={review.author} src={review.author_details.avatar_path.substring(1)} sx={{ width: 90, height: 90, boxShadow: 3}} />
+              ) : (
+                <Avatar alt={review.author} sx={{ width: 90, height: 90, boxShadow: 3}}>
+                  <PersonIcon fontSize="large"/>
+                  </Avatar>
+              )
+            }
+            {/*<Avatar alt={review.author} src={review.author_details.avatar_path.substring(1)} sx={{ width: 90, height: 90, boxShadow: 3}} />*/}
         </Paper>
         <div style={styles.reviewBody}>
         <Typography variant="h6" component="p">
@@ -64,7 +75,7 @@ const MovieReview =  ({ review }) => {
           </Fab>
           <Fab color="secondary" variant="extended" onClick={() => openInNewTab(`${review.url}`)} sx={styles.fab} >
             <NavigationIcon />
-            Review Homepage
+              Review Homepage
           </Fab>
         </div>
       </Paper>

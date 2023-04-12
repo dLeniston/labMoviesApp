@@ -34,14 +34,6 @@ const WatchlistMoviesPage = () => {
   );
 
   // Create an array of queries and run them in parallel.
-  /*const watchlistMovieQueries = useQueries(
-    movieIds.map((movieId) => {
-      return {
-        queryKey: ["movie", { id: movieId }],
-        queryFn: getMovie,
-      };
-    })
-  );*/
   const watchlistMovieQueries = useQueries(
     movieIds.map((movieId) => {
       return {
