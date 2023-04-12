@@ -44,8 +44,6 @@ const MovieReview =  ({ review }) => {
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
   }, []);
 
-  console.log("Reviewer: ", review)
-
   return (
     <>
       <Paper>

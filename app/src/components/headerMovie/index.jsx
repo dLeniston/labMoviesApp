@@ -26,8 +26,6 @@ const styles = {
 
 const MovieHeader = (props) => {
   const movie = props.movie;
-  const location = useLocation()
-  const {fav} = location.state
 
   return (
     <Paper component="div" sx={styles.root}>
