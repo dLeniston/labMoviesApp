@@ -48,24 +48,24 @@ export default function FilterMoviesCard(props) {
     genres.unshift({ id: "0", name: "All" });
   }
 
-  const handleUserImput = (e, type, value) => {
+  const handleUserInput = (e, type, value) => {
     e.preventDefault();
     props.onUserInput(type, value);
   };
 
   const handleTextChange = (e, props) => {
-    handleUserImput(e, "title", e.target.value);
+    handleUserInput(e, "title", e.target.value);
   };
 
   const handleGenreChange = (e) => {
-    handleUserImput(e, "genre", e.target.value);
+    handleUserInput(e, "genre", e.target.value);
   };
 
   return (
     <>
     <Card sx={styles.root} variant="outlined">
       <CardContent>
-        <Typography variant="h5" component="h1" sx={{paddingBottom: "10px"}}>
+        <Typography variant="h5" component="h1" sx={{paddingBottom: "10px", float: "left"}}>
           <FilterAltIcon fontSize="large" />
           Filter Movies
         </Typography>
@@ -98,14 +98,6 @@ export default function FilterMoviesCard(props) {
         </FormControl>
       </CardContent>
     </Card>
-    <Card sx={styles.root} variant="outlined">
-        <CardContent>
-          <Typography variant="h5" component="h1">
-            <SortIcon fontSize="large" />
-            Sort the movies.
-          </Typography>
-        </CardContent>
-      </Card>
       </>
   );
 }

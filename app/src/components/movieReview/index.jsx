@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
@@ -38,6 +38,10 @@ const styles = {
 const MovieReview =  ({ review }) => {
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+  }, []);
 
   return (
     <>
