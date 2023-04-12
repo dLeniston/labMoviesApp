@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import screenWatchersLogo from '/assets/screenwatchers_logo_header.png';
 import { Avatar } from '@mui/material';
 import { styled } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -62,7 +61,9 @@ const SiteHeader = () => {
         <Toolbar>
           {!session ? (
             <div style={styles.title}>
-              <img style={{display: "inline-block", width: "400px"}} src={screenWatchersLogo} />
+              <Typography sx={{fontFamily: "Fugaz One", display: "inline-block", fontSize: "35px"}}>
+                SCREENWATCHERS
+              </Typography>
             </div>
             ):(
             <div style={styles.title}>

@@ -2,8 +2,8 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "react-query";
-import { ReactQueryDevtools } from 'react-query/devtools'
-import SiteHeader from './components/siteHeader'
+import { ReactQueryDevtools } from 'react-query/devtools';
+import SiteHeader from './components/siteHeader';
 import HomePage from "./pages/homePage";
 import UpcomingMovies from "./pages/upcomingMovies";
 import MoviePage from "./pages/movieDetailsPage";

@@ -2,17 +2,23 @@ import React from "react";
 import MovieList from "../components/movieList";
 import SampleMovie from "./sampleData";
 import { MemoryRouter } from "react-router";
-import { action } from "@storybook/addon-actions";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
 import Grid from "@mui/material/Grid";
 import MoviesContextProvider from "../contexts/moviesContext";
+import AuthContextProvider from "../contexts/authContext";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import themeStyle from "../theme";
+
+const theme = createTheme(themeStyle);
 
 export default {
   title: "Home Page/MovieList",
   component: MovieList,
   decorators: [
+    (Story) => <ThemeProvider theme={theme}>{Story()}</ThemeProvider>,
     (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
-    (Story) => <MoviesContextProvider>{Story()}</MoviesContextProvider>,
+    (Story) => <AuthContextProvider>{Story()}</AuthContextProvider>,
+    (Story) => <MoviesContextProvider>{Story()}</MoviesContextProvider>
   ],
 };
 

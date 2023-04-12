@@ -1,15 +1,15 @@
 import React from "react";
-import SiteHeader from "../components/siteHeader";
+import VideoPlayer from "../components/videoPlayer";
 import { MemoryRouter } from "react-router";
 
 export default {
-  title: "App Header",
-  component: SiteHeader,
+  title: "Video Player",
+  component: VideoPlayer,
   decorators: [
     (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
   ],
 };
 
-export const Basic = () => <SiteHeader />;
+export const Basic = () => <VideoPlayer />;
 
 Basic.storyName = "Default";

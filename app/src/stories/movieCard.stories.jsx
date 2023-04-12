@@ -3,14 +3,20 @@ import MovieCard from "../components/movieCard";
 import SampleMovie from "./sampleData";
 import { MemoryRouter } from "react-router";
 import MoviesContextProvider from "../contexts/moviesContext";
-import { action } from "@storybook/addon-actions";
+import AuthContextProvider from "../contexts/authContext";
 import AddToFavouritesIcon from "../components/cardIcons/addToFavourites";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import themeStyle from "../theme";
+
+const theme = createTheme(themeStyle);
 
 export default {
   title: "Home Page/MovieCard",
   component: MovieCard,
   decorators: [
+    (Story) => <ThemeProvider theme={theme}>{Story()}</ThemeProvider>,
     (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
+    (Story) => <AuthContextProvider>{Story()}</AuthContextProvider>,
     (Story) => <MoviesContextProvider>{Story()}</MoviesContextProvider>,
   ],
 };

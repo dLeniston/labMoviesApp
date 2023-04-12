@@ -6,7 +6,7 @@ import { supabaseClient } from "../utils/client";
 export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
-  const { session }  = useAuth();
+  const { session }  = useAuth() || {};
   const [favourites, setFavourites] = useState( [] );
   const [watchlist, setWatchlist] = useState( [] );
   const [myReviews, setMyReviews] = useState( {} );

@@ -1,21 +1,22 @@
 import React from "react";
-import MovieHeader from "../components/headerMovie";
-import SampleMovie from "./sampleData";
-import { MemoryRouter } from "react-router";
+import SiteHeader from "../components/siteHeader";
+import AuthContextProvider from "../contexts/authContext";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import themeStyle from "../theme";
+import { MemoryRouter } from "react-router";
 
 const theme = createTheme(themeStyle);
 
 export default {
-  title: "Movie Details Page/MovieHeader",
-  component: MovieHeader,
+  title: "App Header",
+  component: SiteHeader,
   decorators: [
     (Story) => <ThemeProvider theme={theme}>{Story()}</ThemeProvider>,
     (Story) => <MemoryRouter initialEntries={["/"]}>{Story()}</MemoryRouter>,
+    (Story) => <AuthContextProvider>{Story()}</AuthContextProvider>,
   ],
 };
 
-export const Basic = () => <MovieHeader movie={SampleMovie} />;
+export const Basic = () => <SiteHeader />;
 
 Basic.storyName = "Default";
