@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import Spinner from '../spinner';
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
+import SimilarMovies from "../similarMovies";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -34,10 +35,6 @@ const TemplateMoviePage = ({ movie, children }) => {
 
   const { index } = useState(0)
 
-  const handleChangeIndex = index => {
-    setState({index,});
-  };
-
   const { data , error, isLoading, isError } = useQuery(
     ["images", { url: `https://api.themoviedb.org/3/movie/${movie.id}/images?api_key=${import.meta.env.VITE_TMDB_KEY}`}], 
     fetchResource
@@ -50,6 +47,7 @@ const TemplateMoviePage = ({ movie, children }) => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
+
   const images = data.posters 
 
   return (
@@ -58,7 +56,7 @@ const TemplateMoviePage = ({ movie, children }) => {
       <Grid container spacing={5} style={{ padding: "30px" }}>
         <Grid item xs={3}>
           <div sx={styles.gridListRoot}>
-            <AutoPlaySwipeableViews index={index} onChangeIndex={handleChangeIndex}>
+            <AutoPlaySwipeableViews index={index}>
                 {images.map((image) => (
                     <img key={image.file_path}
                       style={styles.img}
@@ -68,6 +66,7 @@ const TemplateMoviePage = ({ movie, children }) => {
                 ))}
               </AutoPlaySwipeableViews>
           </div>
+          <SimilarMovies movie={movie} />
         </Grid>
         <Grid item xs={9}>
           {children}

@@ -31,12 +31,8 @@ const MovieHeader = (props) => {
 
   return (
     <Paper component="div" sx={styles.root}>
-      <Typography variant="h4" component="h4">
+      <Typography variant="h4" component="h4" sx={{fontWeight: "bold"}}>
         {movie.title}{"   "}
-       {/*} <a href={movie.homepage}>
-          <HomeIcon color="primary"  fontSize="='large"/>
-        </a>*/}
-        {/*<span>{`${movie.tagline}`} </span>*/}
       </Typography>
     </Paper>
   );

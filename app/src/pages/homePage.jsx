@@ -26,6 +26,8 @@ const HomePage = () => {
   const [currPage, setCurrPage] = useState(1);
   const [recsPerPage] = useState(3);
   const pages = [1,2,3,4,5,6,7,8,9,10];
+  const indexOfLastRecord = currPage * recsPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recsPerPage;
 
   // Create array of queries to get pages of movies in parallel.
   const getMovieQueries = useQueries(
@@ -48,8 +50,6 @@ const HomePage = () => {
   let consolidated = [];
   allMovies.forEach(item => Array.prototype.push.apply(consolidated, item));
   consolidated = consolidated ? filterFunction(consolidated): [];
-  const indexOfLastRecord = currPage * recsPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recsPerPage;
   let displayedMovies = consolidated.slice(indexOfFirstRecord, indexOfLastRecord);
   const numOfPages = Math.ceil(consolidated.length / recsPerPage);
 
@@ -63,7 +63,7 @@ const HomePage = () => {
   };
 
   const handleChange = (e, p) => {
-      setCurrPage(p);
+    setCurrPage(p);
   };
 
   return (
