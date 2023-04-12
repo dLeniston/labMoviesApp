@@ -33,7 +33,7 @@ const HomePage = () => {
   const getMovieQueries = useQueries(
     pages.map((page) => {
       return {
-        queryKey: ["discover", { url: `https://api.themoviedb.org/3/discover/movie/?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${page}`}],
+        queryKey: ["discover", { url: `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${page}`}],
         queryFn: fetchResource,
       };
     })
