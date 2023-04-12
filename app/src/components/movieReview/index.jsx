@@ -61,7 +61,6 @@ const MovieReview =  ({ review }) => {
                   </Avatar>
               )
             }
-            {/*<Avatar alt={review.author} src={review.author_details.avatar_path.substring(1)} sx={{ width: 90, height: 90, boxShadow: 3}} />*/}
         </Paper>
         <div style={styles.reviewBody}>
         <Typography variant="h6" component="p">
