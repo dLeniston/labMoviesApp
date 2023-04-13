@@ -1,6 +1,6 @@
-# labMoviesApp
+# Enterprise Web Development - Assignment 1.
 
-Repository space for Enterprise Web Development lab exercises
+This application has been developed for the module Enterprise Web Development and is intended for educational purposes only. The application serves data from [TMDB](https://www.themoviedb.org/) to the user, and integrates [Supabase](https://supabase.com/) for persistence and Google Sign In functionality.
 
 ## Requirements
 
@@ -9,6 +9,12 @@ In order to deploy the service, the host environment will need the following ins
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [GNU Make](https://www.gnu.org/software/make/) Note: this is not strictly required, but will streamline deployment
+
+The following ENV values are required in a `.env` file located in the `app` directory:
+
+- `VITE_TMDB_KEY={your TMDB API key}`
+- `VITE_SUPABASE_URL={your SUPABASE url}`
+- `VITE_SUPABASE_KEY={your SUPABASE key}`
 
 ## Deployment
 

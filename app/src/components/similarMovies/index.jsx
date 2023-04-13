@@ -34,7 +34,7 @@ const SimilarMovies = ({ movie }) => {
   return (
     <>
           <div>
-            <Typography variant="h4" component="h3" sx={{paddingTop: "20px", paddingBottom: "10px", fontWeight: "bold", textDecoration: "underline"}}>
+            <Typography variant="h4" component="h3" sx={{paddingTop: "20px", paddingBottom: "10px", fontWeight: "bold"}}>
                 Similar Movies
             </Typography>
             {data.results.length ? (

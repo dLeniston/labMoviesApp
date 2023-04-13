@@ -86,8 +86,8 @@ const UpcomingMovies = () => {
           count={numOfPages}
           page={currPage}
           onChange={handleChange}
-          color="primary"
-          size="large"
+          showFirstButton 
+          showLastButton
       />
       <MovieFilterUI
         onFilterValuesChange={changeFilterValues}
