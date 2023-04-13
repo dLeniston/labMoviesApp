@@ -99,7 +99,9 @@ const MovieDetails = ( { movie } ) => {
         />
         <Chip color="primary" label={`Released: ${movie.release_date}`} sx={{marginLeft: "5px"}} />
         <div style={{paddingTop: "50px", paddingBottom: "30px", width: "90%" }}>
-          <Typography variant="h4" component="h3" sx={{paddingBottom: "10px", textDecoration: "underline"}}>Media</Typography>
+          <Typography variant="h4" component="h3" sx={{paddingBottom: "10px", fontWeight: "bold"}}>
+            Media
+          </Typography>
           <SwipeableViews enableMouseEvents>
             {media.results.map((video) => (
                       <ReactPlayer url={`http://www.youtube.com/watch?v=${video.key}`} 
@@ -109,7 +111,7 @@ const MovieDetails = ( { movie } ) => {
           </SwipeableViews>
         </div>
         <div style={{marginTop: "30px", width: "95%"}}>
-          <Typography variant="h4" component="h3" sx={{paddingBottom: "10px", textDecoration: "underline"}}>
+          <Typography variant="h4" component="h3" sx={{paddingBottom: "10px", fontWeight: "bold"}}>
             Reviews
           </Typography>
           <SwipeableViews containerStyle={styles.slideContainer}>
