@@ -37,7 +37,7 @@ const WatchlistMoviesPage = () => {
   const watchlistMovieQueries = useQueries(
     movieIds.map((movieId) => {
       return {
-        queryKey: ["movie", { url: `https://api.themoviedb.org/3/movie/${movieId}?api_key=${import.meta.env.VITE_TMDB_KEY}` }],
+        queryKey: ["movie", { url: `${import.meta.env.VITE_MOVIES_API}/api/movies/${movieId}` }],
         queryFn: fetchResource,
       };
     })

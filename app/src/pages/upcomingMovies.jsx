@@ -31,7 +31,7 @@ const UpcomingMovies = () => {
   const getMovieQueries = useQueries(
     pages.map((page) => {
       return {
-        queryKey: ["upcoming", { url: `https://api.themoviedb.org/3/movie/upcoming?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&page=${page}`}],
+        queryKey: ["upcoming", { url: `${import.meta.env.VITE_MOVIES_API}/api/movies/upcoming?page=${page}`}],
         queryFn: fetchResource,
       };
     })

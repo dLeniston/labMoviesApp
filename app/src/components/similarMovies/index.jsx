@@ -17,7 +17,7 @@ const SimilarMovies = ({ movie }) => {
   const { index } = useState(0)
 
   const { data , error, isLoading, isError } = useQuery(
-    ["images", { url: `https://api.themoviedb.org/3/movie/${movie.id}/recommendations?api_key=${import.meta.env.VITE_TMDB_KEY}`}], 
+    ["images", { url: `${import.meta.env.VITE_MOVIES_API}/api/movies/${movie.id}/recommended`}], 
     fetchResource
   );
 

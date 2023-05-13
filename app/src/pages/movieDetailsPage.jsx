@@ -11,7 +11,7 @@ const MovieDetailsPage = () => {
   const { id } = useParams();
 
   const { data: movie, error, isLoading, isError } = useQuery(
-    ["movie", { url: `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_TMDB_KEY}` }],
+    ["movie", { url: `${import.meta.env.VITE_MOVIES_API}/api/movies/${id}` }],
     fetchResource
   );
 
