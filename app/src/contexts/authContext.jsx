@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { supabaseClient } from "../utils/client";
+import { login, signup } from "../api/tmdb-api";
 
 export const AuthContext = React.createContext(null);
 
@@ -32,12 +33,19 @@ const AuthContextProvider = (props) => {
       supabaseClient.auth.signOut(), session
     }
 
+    const register = async (email, password, firstName, lastName, profileImg) => {
+      const result = await signup(email, password, firstName, lastName, profileImg);
+      console.log(result.code);
+      return (result.code == 201) ? true : false;
+    };
+
     return (
         <AuthContext.Provider 
             value={{
                 session,
                 signIn,
                 signOut,
+                register,
             }}
         >
             {props.children}

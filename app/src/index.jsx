@@ -17,6 +17,7 @@ import themeStyle from "./theme";
 import MoviesContextProvider from "./contexts/moviesContext";
 import AuthContextProvider from "./contexts/authContext";
 import CssBaseline from '@mui/material/CssBaseline';
+import SignUpPage from "./pages/signUpPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -48,6 +49,7 @@ const App = () => {
                   <Route path="/" element={<HomePage />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/logout" element={<SignOut />} />
+                  <Route path="/register" element={<SignUpPage />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
                 </ThemeProvider>
