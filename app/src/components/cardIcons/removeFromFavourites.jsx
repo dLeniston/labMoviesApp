@@ -8,11 +8,11 @@ import { useAuth } from "../../hooks/useAuth";
 
 const RemoveFromFavouritesIcon = ({ movie }) => {
   const context = useContext(MoviesContext);
-  const { session }  = useAuth();
+  const { user }  = useAuth();
 
   const onUserRequest = (e) => {
     e.preventDefault();
-    context.removeFromFavourites(movie, session?.user?.id);
+    context.removeFromFavourites(movie, user);
   };
 
 return (

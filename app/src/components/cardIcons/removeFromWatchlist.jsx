@@ -8,11 +8,11 @@ import { useAuth } from "../../hooks/useAuth";
 
 const RemoveFromWatchlistIcon = ({ movie }) => {
   const context = useContext(MoviesContext);
-  const { session }  = useAuth();
+  const { user }  = useAuth();
 
   const onUserRequest = (e) => {
     e.preventDefault();
-    context.removeFromWatchlist(movie, session?.user?.id);
+    context.removeFromWatchlist(movie, user);
   };
 
 return (

@@ -56,29 +56,17 @@ export const getUserItems = (url) => {
   ).then((res) => res.json());
 };
 
-
-/*export const addTo = (userId, movieId) => {
-  return fetch(`${import.meta.env.VITE_MOVIES_API}/api/accounts/${userId}/favourites`, {
+export const removeFromUserItems = (url, movieId) => {
+  return fetch(url, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': window.localStorage.getItem('token')
     },
-    method: 'post',
+    method: 'delete',
     body: JSON.stringify({ movieId: movieId })
   },
   ).then((res) => res.json());
-}*/
-
-/*export const addToWatchlist = (userId, movieId) => {
-  return fetch(`${import.meta.env.VITE_MOVIES_API}/api/accounts/${userId}/watchlist`, {
-    headers: {
-      'Authorization': window.localStorage.getItem('token')
-    },
-    method: 'post',
-    body: JSON.stringify({ movieId: movieId })
-  },
-  ).then((res) => res.json());
-}*/
+}
 
 export const getUser = (email) => {
   return fetch(`${import.meta.env.VITE_MOVIES_API}/api/accounts/${email}`, {

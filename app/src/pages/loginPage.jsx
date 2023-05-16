@@ -39,8 +39,8 @@ const handleSubmit = (e) => {
                 alignItems: 'center'
             }}
             >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                <LoginIcon />
+            <Avatar sx={{ m: 1, bgcolor: grey[900] }}>
+                <LoginIcon sx={{color: grey[300] }} />
             </Avatar>
             <Typography component="h1" variant="h5" sx={{color: grey[900]}}>
                 Sign In

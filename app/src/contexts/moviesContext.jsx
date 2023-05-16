@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
-import { addUserItem, getUserItems } from "../api/tmdb-api";
+import { addUserItem, getUserItems, removeFromUserItems } from "../api/tmdb-api";
 
 export const MoviesContext = React.createContext(null);
 
@@ -62,6 +62,34 @@ const MoviesContextProvider = (props) => {
     }
   };
 
+  const removeFromFavourites = async (movie, user) => {
+    try{
+      let { error } = await removeFromUserItems(`${import.meta.env.VITE_MOVIES_API}/api/accounts/${user?.id}/favourites`, movie.id)
+      if(!error){
+        //remove from server state
+        setFavourites(favourites.filter((mId) => mId !== movie.id));
+      }else{
+        throw error;
+      }
+    }catch(err){
+      console.log(err);
+    }
+  };
+
+  const removeFromWatchlist = async (movie, user) => {
+    try{
+      let { error } = await removeFromUserItems(`${import.meta.env.VITE_MOVIES_API}/api/accounts/${user?.id}/watchlist`, movie.id)
+      if(!error){
+        //remove from server state
+        setWatchlist(watchlist.filter((mId) => mId !== movie.id));
+      }else{
+        throw error;
+      }
+    }catch(err){
+      console.log(err);
+    }
+  };
+
   const addToWatchlist = async (movie, user) => {
     try{
       let updatedWatchlist = [...watchlist];
@@ -88,6 +116,8 @@ const MoviesContextProvider = (props) => {
         getUserWatchlist,
         addToFavourites,
         addToWatchlist,
+        removeFromFavourites,
+        removeFromWatchlist,
       }}
     >
       {props.children}
