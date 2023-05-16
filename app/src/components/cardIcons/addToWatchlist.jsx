@@ -5,7 +5,6 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import Tooltip from '@mui/material/Tooltip';
 import { grey } from "@mui/material/colors";
 import { useAuth } from "../../hooks/useAuth";
-import { addToWatchlist } from "../../api/tmdb-api";
 
 const AddToWatchlistIcon = ({ movie }) => {
   const context = useContext(MoviesContext);
@@ -13,9 +12,9 @@ const AddToWatchlistIcon = ({ movie }) => {
 
   const onUserSelect = (e) => {
     e.preventDefault();
-    addToWatchlist(movie.id, user?.id);
-    //context.addToWatchlist(movie, session?.user?.id);
+    context.addToWatchlist(movie, user);
   };
+
   return (
     <Tooltip title={`Add "` + movie.title + `" to watchlist`}>
       <IconButton aria-label="add to watchlist" onClick={onUserSelect}>

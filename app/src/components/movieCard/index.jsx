@@ -28,7 +28,6 @@ const styles = {
 
 export default function MovieCard({ movie, action }) {
 
-  
   const { favourites, watchlist } = useContext(MoviesContext);
   const [isHovering, setIsHovering] = useState(false);
   const year = movie.release_date.split("-");

@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { getUserSelection } from "../api/supabase";
 import { useAuth } from "../hooks/useAuth";
-import { supabaseClient } from "../utils/client";
+import { addUserItem, getUserItems } from "../api/tmdb-api";
 
 export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
-  const { session }  = useAuth() || {};
+  const { user, isAuthenticated }  = useAuth() || {};
   const [favourites, setFavourites] = useState( [] );
   const [watchlist, setWatchlist] = useState( [] );
-  const [myReviews, setMyReviews] = useState( {} );
 
   useEffect(() => {
     //Setup favourites and watchlist from user data present in database
-    getUserFavourites(session?.user?.id);
-    getUserWatchlist(session?.user?.id);
-  }, [session]);
+    getUserFavourites(user);
+    getUserWatchlist(user);
+  }, [ user ]);
+
+  useEffect(() => {
+    // Clear favorites and watchlist state on sign out
+    if (isAuthenticated == false) {
+        setFavourites( [] );
+        setWatchlist( [] );
+    }
+}, [isAuthenticated]);
 
   // Get users favourites from database, populate server state
   const getUserFavourites = async (user) => {
-    let userFavourites = await getUserSelection("favourites", user);
+    let userFavourites = await getUserItems(`${import.meta.env.VITE_MOVIES_API}/api/accounts/${user?.id}/favourites`);
     if(userFavourites === undefined){
       setFavourites([]);
     }else{
@@ -29,7 +35,7 @@ const MoviesContextProvider = (props) => {
 
   // Get users watchlist items from database, populate server state
   const getUserWatchlist = async (user) => {
-    let userWatchlist = await getUserSelection("watchlist", user);
+    let userWatchlist = await getUserItems(`${import.meta.env.VITE_MOVIES_API}/api/accounts/${user?.id}/watchlist`);
     if(userWatchlist === undefined){
       setWatchlist([]);
     }else{
@@ -41,8 +47,8 @@ const MoviesContextProvider = (props) => {
     try{
         let updatedFavourites = [...favourites];
         if(!favourites.includes(movie.id)) {
-          // add to supabase DB table "favourites"
-          let { error } = await supabaseClient.from("favourites").insert({id: movie.id, user_id: user});
+          // add to user account
+          let { error } = await addUserItem(`${import.meta.env.VITE_MOVIES_API}/api/accounts/${user?.id}/favourites`, movie.id);
           // if no error returned from supabase, add to server state
           if(!error){
             updatedFavourites.push(movie.id);
@@ -54,27 +60,13 @@ const MoviesContextProvider = (props) => {
     } catch (err) {
       console.log(err);
     }
-  }
-
-  const removeFromFavourites = async (movie, user) => {
-    try{
-      let { error } = await supabaseClient.from("favourites").delete().eq("id", movie.id).eq("user_id", user);
-      if(!error){
-        //remove from server state
-        setFavourites(favourites.filter((mId) => mId !== movie.id));
-      }else{
-        throw error;
-      }
-    }catch(err){
-      console.log(err);
-    }
   };
 
   const addToWatchlist = async (movie, user) => {
     try{
       let updatedWatchlist = [...watchlist];
       if(!watchlist.includes(movie.id)) {
-        let { error } = await supabaseClient.from("watchlist").insert({id: movie.id, user_id: user});
+        let { error } = await addUserItem(`${import.meta.env.VITE_MOVIES_API}/api/accounts/${user?.id}/watchlist`, movie.id);
         if(!error){
           updatedWatchlist.push(movie.id)
         }else{
@@ -87,25 +79,6 @@ const MoviesContextProvider = (props) => {
     }
   }
 
-  const removeFromWatchlist = async (movie, user) => {
-    try{
-      let { error } = await supabaseClient.from("watchlist").delete().eq("id", movie.id).eq("user_id", user);
-      
-      if(!error){
-        setWatchlist(watchlist.filter((mId) => mId !== movie.id));
-      }else{
-        throw error;
-      }
-
-    }catch(err){
-      console.log(err);
-    }
-  }
-  
-  const addReview = (movie, review) => { 
-    setMyReviews( {...myReviews, [movie.id]: review } )
-  };
-
   return (
     <MoviesContext.Provider
       value={{
@@ -114,10 +87,7 @@ const MoviesContextProvider = (props) => {
         getUserFavourites,
         getUserWatchlist,
         addToFavourites,
-        removeFromFavourites,
         addToWatchlist,
-        removeFromWatchlist,
-        addReview,
       }}
     >
       {props.children}
