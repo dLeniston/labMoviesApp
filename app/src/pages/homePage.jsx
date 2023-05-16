@@ -22,7 +22,7 @@ const genreFiltering = {
 
 const HomePage = () => {
   const { filterValues, setFilterValues, filterFunction } = useFiltering([],[titleFiltering, genreFiltering]);
-  const { session }  = useAuth();
+  const { isAuthenticated }  = useAuth();
   const [currPage, setCurrPage] = useState(1);
   const [recsPerPage] = useState(3);
   const pages = [1,2,3,4,5,6,7,8,9,10];
@@ -68,7 +68,7 @@ const HomePage = () => {
 
   return (
     <>
-    {session ? (
+    {isAuthenticated ? (
       <PageTemplate
         title="Discover Movies"
         movies={displayedMovies}

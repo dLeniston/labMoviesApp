@@ -5,14 +5,16 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Tooltip from '@mui/material/Tooltip';
 import { grey } from "@mui/material/colors";
 import { useAuth } from "../../hooks/useAuth";
+import { addToFavorites } from "../../api/tmdb-api";
 
 const AddToFavouritesIcon = ({ movie }) => {
   const context = useContext(MoviesContext);
-  const { session }  = useAuth();
+  const { user }  = useAuth();
 
   const onUserSelect = (e) => {
     e.preventDefault();
-    context.addToFavourites(movie, session?.user?.id);
+    addToFavorites(movie.id,  user?.id);
+    //context.addToFavourites(movie, session?.user?.id);
   };
   return (
     <Tooltip title={`Add "` + movie.title + `" to favourites`}>

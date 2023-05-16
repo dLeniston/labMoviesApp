@@ -21,7 +21,7 @@ const genreFiltering = {
 };
 
 const UpcomingMovies = () => {
-  const { session }  = useAuth();
+  const { isAuthenticated }  = useAuth();
   const { filterValues, setFilterValues, filterFunction } = useFiltering([],[titleFiltering, genreFiltering]);
   const [currPage, setCurrPage] = useState(1);
   const [recsPerPage] = useState(3);
@@ -68,7 +68,7 @@ const UpcomingMovies = () => {
 
   return (
     <>
-    {session ? (
+    {isAuthenticated ? (
       <PageTemplate
       title='Upcoming Movies'
       movies={displayedMovies}
