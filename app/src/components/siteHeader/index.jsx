@@ -31,12 +31,14 @@ const SiteHeader = () => {
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  const { session }  = useAuth();
+  const { isAuthenticated, user }  = useAuth();
+
+  console.log("USER: ", user);
 
   const limitedOptions = [
     { label: "Discover", path: "/" },
     { label: "Upcoming", path: "/movies/upcoming" },
-    { label: "Sign in with Google", path: "/login"}
+    { label: "Sign In", path: "/login"}
   ];
 
   const fullOptions = [ 
@@ -59,7 +61,7 @@ const SiteHeader = () => {
     <>
       <AppBar sx={styles.appbar} position="fixed" elevation={0} color="primary">
         <Toolbar>
-          {!session ? (
+          {!isAuthenticated ? (
             <div style={styles.title}>
               <Typography sx={{fontFamily: "Fugaz One", display: "inline-block", fontSize: "35px"}}>
                 SCREENWATCHERS
@@ -67,8 +69,8 @@ const SiteHeader = () => {
             </div>
             ):(
             <div style={styles.title}>
-              <Avatar sx={{display: "inline-block", marginRight: "20px"}} alt={session?.user?.user_metadata?.full_name ?? null } src={session?.user?.user_metadata?.avatar_url ?? null} />
-              <Typography variant="h6" sx={{display: "inline-block"}}>{session?.user?.user_metadata?.full_name}</Typography>
+              <Avatar sx={{display: "inline-block", marginRight: "20px"}} alt={user?.firstName ?? null } src={user?.profileImg ?? null} />
+              <Typography variant="h6" sx={{display: "inline-block"}}>{user?.firstName} {user?.lastName}</Typography>
             </div>) 
             }
           {isMobile ? (
@@ -96,7 +98,7 @@ const SiteHeader = () => {
                 }}
                 open={open}
                 onClose={() => setAnchorEl(null)}>
-              {!session ? (
+              {!isAuthenticated ? (
                 limitedOptions.map((opt) => (
                   <MenuItem
                     key={opt.label}
@@ -116,7 +118,7 @@ const SiteHeader = () => {
             </>
           ) : (
             <>
-              {!session ? (
+              {!isAuthenticated ? (
                 limitedOptions.map((opt) => (
                   <MenuItem
                     key={opt.label}

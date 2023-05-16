@@ -34,6 +34,16 @@ export const login = (email, password) => {
     }).then(res => res.json());
 };
 
+export const getUser = (email) => {
+  return fetch(`${import.meta.env.VITE_MOVIES_API}/api/accounts/${email}`, {
+    headers: {
+      'Authorization': window.localStorage.getItem('token')
+    },
+    method: 'get'
+  },
+  ).then((res) => res.json());
+};
+
  export const getMovieReviews = (id) => {
   return fetch(
     `${import.meta.env.VITE_MOVIES_API}/api/movies/${id}/reviews`

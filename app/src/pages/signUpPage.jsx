@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { grey } from "@mui/material/colors";
 
-const SignUpPage = props => {
+const SignUpPage = (props) => {
     const context = useContext(AuthContext)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

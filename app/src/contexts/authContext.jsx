@@ -1,49 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { supabaseClient } from "../utils/client";
-import { login, signup } from "../api/tmdb-api";
+import { login, signup, getUser } from "../api/tmdb-api";
 
 export const AuthContext = React.createContext(null);
 
 const AuthContextProvider = (props) => {
-    const [session, setSession ] = useState(null);
+    const existingToken = localStorage.getItem("token");
+    const [ isAuthenticated, setIsAuthenticated ] = useState(false);
+    const [ authToken, setAuthToken ] = useState(existingToken);
+    const [ email, setEmail ] = useState("");
+    const [ user, setUser ] = useState({});
 
-      useEffect(() => {
-        const session = supabaseClient.auth.getSession().then(({ data: { session } }) => {
-          setSession(session)
-        });
-    
-        setSession(session)
-        const { subscription } = supabaseClient.auth.onAuthStateChange(
-          async (_event, session) => {
-            setSession(session)
-          }
-        )
-        return () => {
-          subscription?.unsubscribe()
-        }
-      }, []);
-
-    const signIn = () => {
-        supabaseClient.auth.signInWithOAuth({
-            provider: "google",
-          });
-    }
-
-    const signOut = () => {
-      supabaseClient.auth.signOut(), session
-    }
+    const setToken = (data) => {
+      localStorage.setItem("token", data);
+      setAuthToken(data);
+    };
+  
+    const authenticate = async (email, password) => {
+      const result = await login(email, password);
+      if (result.token) {
+        setToken(result.token)
+        setIsAuthenticated(true);
+        setEmail(email);
+        const user = await getUser(email);
+        setUser(user);
+      }
+    };
 
     const register = async (email, password, firstName, lastName, profileImg) => {
       const result = await signup(email, password, firstName, lastName, profileImg);
-      console.log(result.code);
       return (result.code == 201) ? true : false;
     };
+
+    const signOut = () => {
+      setTimeout(() => setIsAuthenticated(false), 100);
+    }
 
     return (
         <AuthContext.Provider 
             value={{
-                session,
-                signIn,
+                isAuthenticated,
+                user,
+                authenticate,
                 signOut,
                 register,
             }}

@@ -18,6 +18,7 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AuthContextProvider from "./contexts/authContext";
 import CssBaseline from '@mui/material/CssBaseline';
 import SignUpPage from "./pages/signUpPage";
+import LoginPage from "./pages/loginPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -47,8 +48,8 @@ const App = () => {
                   <Route path="/movies/:id" element={<MoviePage />} />
                   <Route path="/reviews/:id" element={<MovieReviewPage/>} />
                   <Route path="/" element={<HomePage />} />
-                  <Route path="/login" element={<Login />} />
                   <Route path="/logout" element={<SignOut />} />
+                  <Route path="/login" element={<LoginPage />} />
                   <Route path="/register" element={<SignUpPage />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
