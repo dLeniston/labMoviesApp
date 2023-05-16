@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import PageTemplate from "../components/templateMovieListPage";
+import { Navigate  } from "react-router-dom";
 import { MoviesContext } from "../contexts/moviesContext";
 import { useQueries } from "react-query";
 import { fetchResource } from "../api/tmdb-api";
@@ -7,7 +8,7 @@ import Spinner from "../components/spinner";
 import useFiltering from "../hooks/useFiltering";
 import MovieFilterUI, { titleFilter } from "../components/movieFilterUI";
 import RemoveFromFavourites from "../components/cardIcons/removeFromFavourites";
-import WriteReview from "../components/cardIcons/writeReview";
+import { useAuth } from "../hooks/useAuth";
 
 const titleFiltering = {
   name: "title",
@@ -29,10 +30,15 @@ export const genreFiltering = {
 
 const FavouriteMoviesPage = () => {
   const { favourites: movieIds } = useContext(MoviesContext);
+  const { isAuthenticated } = useAuth();
   const { filterValues, setFilterValues, filterFunction } = useFiltering(
     [],
     [titleFiltering, genreFiltering]
   );
+
+  if(isAuthenticated == false){
+    return <Navigate to="/" />;
+  }
 
   // Create an array of queries and run them in parallel.
   const favouriteMovieQueries = useQueries(
@@ -73,7 +79,6 @@ const FavouriteMoviesPage = () => {
           return (
             <>
               <RemoveFromFavourites movie={movie} />
-              {/*<WriteReview movie={movie} />*/}
             </>
           );
         }}
