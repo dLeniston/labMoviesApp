@@ -11,8 +11,11 @@ const MoviesContextProvider = (props) => {
 
   useEffect(() => {
     //Setup favourites and watchlist from user data present in database
-    getUserFavourites(user);
-    getUserWatchlist(user);
+    if(Object.keys(user).length === 0){
+    }else{
+      getUserFavourites(user);
+      getUserWatchlist(user);
+    }
   }, [ user ]);
 
   useEffect(() => {
