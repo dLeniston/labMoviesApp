@@ -3,6 +3,7 @@ version: '3'
 services:
   movies-app-dev:
     image: movies-app-image
+    container_name: movies-api-client
     logging:
       options:
           max-file: "5"
